@@ -15,7 +15,15 @@ nextflow.enable.dsl = 2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { HIFIGENOMEASSEMBLY  } from './workflows/hifigenomeassembly'
+if (params.mode == "assemble_annotate") {
+    include { ASSEMBLE } from './workflows/assemble'
+    include { ANNOTATE } from './workflows/annotate'
+} else if (params.mode == "assemble") {
+    include { ASSEMBLE } from './workflows/assemble'
+} else if (params.mode == "annotate") {
+    include { ANNOTATE } from './workflows/annotate'
+}
+
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_hifigenomeassembly_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_hifigenomeassembly_pipeline'
 
@@ -36,14 +44,16 @@ workflow RL_HIFIGENOMEASSEMBLY {
     main:
 
     //
-    // WORKFLOW: Run pipeline
+    // WORKFLOW: Run genome assembly  
     //
-    HIFIGENOMEASSEMBLY (
+
+    ASSEMBLE (
         samplesheet
     )
+    ch_multiqc = ASSEMBLE.out.multiqc_report 
 
     emit:
-    multiqc_report = HIFIGENOMEASSEMBLY.out.multiqc_report // channel: /path/to/multiqc_report.html
+    multiqc_report = ch_multiqc // channel: /path/to/multiqc_report.html
 
 }
 /*

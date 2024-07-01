@@ -4,7 +4,13 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { FASTQC                 } from '../modules/nf-core/fastqc/main'
+include { HIFI_QC                } from './subworkflows/local/hifi_qc'
+include { GENOME_ASSEMBLY        } from './subworkflows/local/genome_assembly'
+include { ASSEMBLY_QC            } from './subworkflows/local/assembly_qc'
+include { SCAFFOLD               } from './subworkflows/local/scaffold'
+include { SYNTENY                } from './subworkflows/local/synteny'
+include { REPEATS                } from './subworkflows/local/repeats'
+
 include { MULTIQC                } from '../modules/nf-core/multiqc/main'
 include { paramsSummaryMap       } from 'plugin/nf-validation'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
@@ -17,10 +23,11 @@ include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_hifi
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-workflow HIFIGENOMEASSEMBLY {
+workflow ASSEMBLE {
 
     take:
     ch_samplesheet // channel: samplesheet read in from --input
+    ch_fastq       // channel: path(fastq)
 
     main:
 
@@ -28,13 +35,76 @@ workflow HIFIGENOMEASSEMBLY {
     ch_multiqc_files = Channel.empty()
 
     //
-    // MODULE: Run FastQC
+    // SUBWORKFLOW: Run QC on PacBio HiFi reads
     //
-    FASTQC (
-        ch_samplesheet
+    HIFI_QC (
+        ch_samplesheet,
+        ch_fastq // path to HiFi WGS fastq file
+
     )
-    ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]})
-    ch_versions = ch_versions.mix(FASTQC.out.versions.first())
+    ch_multiqc_files = ch_multiqc_files.mix(HIFI_QC.out.zip.collect{it[1]})
+    ch_versions = ch_versions.mix(HIFI_QC.out.versions.first())
+
+    //
+    // SUBWORKFLOW: Assemble PacBio HiFi reads
+    //
+    GENOME_ASSEMBLY (
+        ch_samplesheet,
+        ch_fastq // path to HiFi WGS fastq file
+
+    )
+    ch_versions = ch_versions.mix(GENOME_ASSEMBLY.out.versions.first())
+    ch_assembly_fasta = GENOME_ASSEMBLY.out
+
+    //
+    // SUBWORKFLOW: QC the genome assembly (contigs at this point)
+    //
+    ASSEMBLY_QC (
+        ch_assembly_fasta // path to genome assembly 
+
+    )
+    ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.zip.collect{it[1]})
+    ch_versions = ch_versions.mix(ASSEMBLY_QC.out.versions.first())
+
+    //
+    // SUBWORKFLOW: Scaffold the genome assembly
+    //
+    SCAFFOLD (
+        ch_assembly_fasta // path to genome assembly
+
+    )
+    ch_versions = ch_versions.mix(SCAFFOLD.out.versions.first())
+    ch_scaffold_fasta = SCAFFOLD.out
+
+    //
+    // SUBWORKFLOW: Synteny analysis
+    //
+    SYNTENY (
+        ch_scaffold_fasta // path to genome scaffold
+
+    )
+    ch_multiqc_files = ch_multiqc_files.mix(SYNTENY.out.zip.collect{it[1]})
+    ch_versions = ch_versions.mix(SYNTENY.out.versions.first())
+
+    //
+    // SUBWORKFLOW: SV analysis
+    //
+    SV (
+        ch_scaffold_fasta // path to genome scaffold
+
+    )
+    ch_multiqc_files = ch_multiqc_files.mix(SV.out.zip.collect{it[1]})
+    ch_versions = ch_versions.mix(SV.out.versions.first())
+
+    //
+    // SUBWORKFLOW: Repeat masking
+    //
+    REPEATS (
+        ch_scaffold_fasta // path to genome scaffold
+
+    )
+    ch_multiqc_files = ch_multiqc_files.mix(REPEATS.out.zip.collect{it[1]})
+    ch_versions = ch_versions.mix(REPEATS.out.versions.first())
 
     //
     // Collate and save software versions
