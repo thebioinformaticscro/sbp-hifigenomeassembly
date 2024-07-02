@@ -1,7 +1,6 @@
 process BIOAWK {
     tag "$meta.id"
     label 'process_single'
-    debug true
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
@@ -23,17 +22,16 @@ process BIOAWK {
     prefix = task.ext.prefix ?: "${meta.id}"
 
     def VERSION = '1.0' // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
-    
-    shell:
-    '''
-    echo !{input}
-    echo "platform,length" > !{prefix}.length.csv
+    """
+    echo "platform,length" > ${prefix}
     bioawk \\
-        -cfastx '{print "PacBio_HiFi," length($seq)}' !{input} >> !{prefix}.length.csv
+        $args \\
+        $input \\
+        >> ${prefix}
 
     cat <<-END_VERSIONS > versions.yml
-    "!{task.process}":
-        bioawk: !{VERSION}
+    "${task.process}":
+        bioawk: $VERSION
     END_VERSIONS
-    '''
+    """
 }
