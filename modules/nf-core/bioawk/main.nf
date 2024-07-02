@@ -22,17 +22,17 @@ process BIOAWK {
     prefix = task.ext.prefix ?: "${meta.id}"
 
     def VERSION = '1.0' // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
-    """
-    echo "platform,length" > ${prefix}.length.csv
+    '''
+    echo "platform,length" > !{prefix}.length.csv
     bioawk \\
         -cfastx '{print "PacBio_HiFi," length($seq)}' \\
-        $args \\
-        $input \\
-        >> ${prefix}.length.csv
+        !{args} \\
+        !{input} \\
+        >> !{prefix}.length.csv
 
     cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
+    "!{task.process}":
         bioawk: $VERSION
     END_VERSIONS
-    """
+    '''
 }
