@@ -12,11 +12,11 @@ workflow HIFI_QC {
     main:
 
     ch_fastq = ch_samplesheet.map { meta, file, fasta -> [meta, file] }
-    ch_fastq.view()
+    //ch_fastq.view()
 
     ch_versions = Channel.empty()
 
-    // READ_LEN ( ch_fastq )
+    READ_LEN ( ch_fastq )
     // ch_versions = ch_versions.mix(READ_LEN.out.versions.first())
 
     // ASSEMBLY_STATS ( ch_fastq )

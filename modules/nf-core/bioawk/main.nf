@@ -11,7 +11,7 @@ process BIOAWK {
     tuple val(meta), path(input)
 
     output:
-    tuple val(meta), path("*.gz"), emit: output
+    tuple val(meta), path("*.csv")  , emit: output
     path "versions.yml"             , emit: versions
 
     when:
@@ -23,12 +23,11 @@ process BIOAWK {
 
     def VERSION = '1.0' // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
     """
+    echo "platform,length" > ${prefix}.length.csv
     bioawk \\
         $args \\
         $input \\
-        > ${prefix}
-
-    gzip ${prefix}
+        >> ${prefix}.length.csv
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
