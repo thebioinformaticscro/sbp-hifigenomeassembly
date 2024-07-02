@@ -23,6 +23,8 @@ process BIOAWK {
     prefix = task.ext.prefix ?: "${meta.id}"
 
     def VERSION = '1.0' // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
+    
+    shell:
     '''
     echo !{input}
     echo "platform,length" > !{prefix}.length.csv
