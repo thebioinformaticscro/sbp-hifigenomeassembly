@@ -39,6 +39,7 @@ workflow ASSEMBLE {
     HIFI_QC (
         ch_samplesheet  
     )
+}
     // ch_multiqc_files = ch_multiqc_files.mix(HIFI_QC.out.zip.collect{it[1]})
     // ch_versions = ch_versions.mix(HIFI_QC.out.versions.first())
 
