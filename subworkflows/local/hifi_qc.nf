@@ -11,7 +11,7 @@ workflow HIFI_QC {
 
     main:
 
-    ch_fastq = ch_samplesheet.map { meta, file, fasta -> [meta + [type: 'sample'], file] }
+    ch_fastq = ch_samplesheet.map { meta, file, fasta -> [meta, file] }
     ch_fastq.view()
 
     ch_versions = Channel.empty()
