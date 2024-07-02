@@ -25,7 +25,7 @@ process BIOAWK {
     """
     echo "platform,length" > ${prefix}.length.csv
     bioawk \\
-        '-c fastx '{print "PacBio_HiFi," length($seq)}'' \\
+        -cfastx '{print "PacBio_HiFi," length($seq)}' \\
         $args \\
         $input \\
         >> ${prefix}.length.csv
