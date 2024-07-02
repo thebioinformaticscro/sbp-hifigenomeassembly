@@ -14,15 +14,7 @@ nextflow.enable.dsl = 2
     IMPORT FUNCTIONS / MODULES / SUBWORKFLOWS / WORKFLOWS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-
-if (params.mode == "assemble_annotate") {
-    include { ASSEMBLE } from './workflows/assemble'
-    include { ANNOTATE } from './workflows/annotate'
-} else if (params.mode == "assemble") {
-    include { ASSEMBLE } from './workflows/assemble'
-} else if (params.mode == "annotate") {
-    include { ANNOTATE } from './workflows/annotate'
-}
+include { ASSEMBLE                } from './workflows/assemble'
 
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_hifigenomeassembly_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_hifigenomeassembly_pipeline'
