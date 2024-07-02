@@ -23,11 +23,10 @@ process BIOAWK {
 
     def VERSION = '1.0' // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
     """
-    echo "platform,length" > ${prefix}
     bioawk \\
         $args \\
         $input \\
-        >> ${prefix}
+        > ${prefix}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
