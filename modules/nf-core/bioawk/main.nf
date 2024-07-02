@@ -33,7 +33,7 @@ process BIOAWK {
 
     cat <<-END_VERSIONS > versions.yml
     "!{task.process}":
-        bioawk: $VERSION
+        bioawk: !{VERSION}
     END_VERSIONS
     '''
 }
