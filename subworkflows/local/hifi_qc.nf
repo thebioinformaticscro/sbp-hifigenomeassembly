@@ -1,6 +1,6 @@
 include { BIOAWK as READ_LEN     } from '../../modules/nf-core/bioawk/main'
-include { ASSEMBLY_STATS         } from '../../modules/local/assemblystats/main'
-include { PLOT_READ_LEN          } from '../../modules/local/plotreadlen/main'
+include { ASSEMBLY_STATS         } from '../../modules/local/assemblystats'
+include { PLOT_READ_LEN          } from '../../modules/local/plotreadlen'
 
 
 workflow HIFI_QC {
