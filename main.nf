@@ -88,7 +88,7 @@ workflow {
         params.outdir,
         params.monochrome_logs,
         params.hook_url,
-        RL_HIFIGENOMEASSEMBLY.out.multiqc_report
+        // RL_HIFIGENOMEASSEMBLY.out.multiqc_report
     )
 }
 
