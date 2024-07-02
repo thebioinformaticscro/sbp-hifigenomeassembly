@@ -26,8 +26,8 @@ process BIOAWK {
     echo "platform,length" > !{prefix}.length.csv
     bioawk \\
         -cfastx '{print "PacBio_HiFi," length($seq)}' \\
-        !{args} \\
         !{input} \\
+        !{args} \\
         >> !{prefix}.length.csv
 
     cat <<-END_VERSIONS > versions.yml
