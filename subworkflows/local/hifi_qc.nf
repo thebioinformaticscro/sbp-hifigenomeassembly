@@ -25,7 +25,7 @@ workflow HIFI_QC {
     // PLOT_READ_LEN ( ASSEMBLY_STATS.out )
 
 
-    // emit:
+    emit:
     // n50                = ASSEMBLY_STATS.out.n50           // channel: [ val(meta), path(txt) ]
     // read_len_plot      = PLOT_READ_LEN.out.read_len_plot  // channel: [ val(meta), path(png) ]
 
