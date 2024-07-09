@@ -21,8 +21,8 @@ process ASSEMBLY_STATS {
     script:
     prefix = task.ext.prefix ?: "${meta.id}"
     """
-    echo $meta
-    echo $meta.fastq
+    echo ${meta.id}
+    echo ${meta.id}.fastq
     # gunzip $input
     assembly-stats -t $input > ${prefix}
 
