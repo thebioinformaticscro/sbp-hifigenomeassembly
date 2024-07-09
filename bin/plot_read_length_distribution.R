@@ -26,6 +26,7 @@ sample_id <- args[2]
 # Load packages and sourced files
 library(tidyverse)
 library(cowplot)
+library(plyr)
 
 # ============================================================================
 # Set global options
