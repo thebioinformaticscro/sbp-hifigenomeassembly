@@ -39,7 +39,7 @@ projectDir <- getwd()
 # ============================================================================
 # Load data
 
-read_length_df <- read.csv(rl, header = FALSE)
+read_length_df <- read.csv(rl, sep = ",", header = FALSE)
 colnames(read_length_df) <- c("platform", "length")
 read_length_df$platform <- as.factor(read_length_df$platform)
 read_length_df$platform <- factor(read_length_df$platform,level = c("PacBio_HiFi"))
