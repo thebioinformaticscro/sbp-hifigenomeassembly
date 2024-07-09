@@ -27,15 +27,15 @@ process ASSEMBLY_STATS {
     END_VERSIONS
     """
 
-    stub:
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    // stub:
+    // def prefix = task.ext.prefix ?: "${meta.id}"
 
-    """
-    touch ${prefix}
+    // """
+    // touch ${prefix}
 
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        assemblystats: \$(assembly-stats --version)
-    END_VERSIONS
-    """
+    // cat <<-END_VERSIONS > versions.yml
+    // "${task.process}":
+    //     assemblystats: \$(assembly-stats --version)
+    // END_VERSIONS
+    // """
 }
