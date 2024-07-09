@@ -4,8 +4,8 @@ process ASSEMBLY_STATS {
 
     conda "bioconda::assembly-stats=1.0.1"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/bioawk:1.0--h5bf99c6_6':
-        'biocontainers/bioawk:1.0--h5bf99c6_6' }"
+        'oras://community.wave.seqera.io/library/assembly-stats:1.0.1--5635199ce6ee4b22' :
+        'community.wave.seqera.io/library/assembly-stats:1.0.1--5635199ce6ee4b22' }"
 
     input:
     tuple val(meta), path(input)
@@ -28,15 +28,15 @@ process ASSEMBLY_STATS {
     END_VERSIONS
     """
 
-    // stub:
-    // def prefix = task.ext.prefix ?: "${meta.id}"
+    stub:
+    def prefix = task.ext.prefix ?: "${meta.id}"
 
-    // """
-    // touch ${prefix}
+    """
+    touch ${prefix}
 
-    // cat <<-END_VERSIONS > versions.yml
-    // "${task.process}":
-    //     assemblystats: \$(assembly-stats --version)
-    // END_VERSIONS
-    // """
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        assemblystats: \$(assembly-stats --version)
+    END_VERSIONS
+    """
 }
