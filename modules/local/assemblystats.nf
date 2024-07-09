@@ -20,7 +20,7 @@ process ASSEMBLY_STATS {
     script:
     prefix = task.ext.prefix ?: "${meta.id}"
     """
-    zcat $input | assembly-stats >> ${prefix}
+    assembly-stats -t $input > ${prefix}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
