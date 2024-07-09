@@ -19,8 +19,8 @@ workflow HIFI_QC {
     READ_LEN ( ch_fastq )
     ch_versions = ch_versions.mix(READ_LEN.out.versions.first())
 
-    // ASSEMBLY_STATS ( ch_fastq )
-    // ch_versions = ch_versions.mix(ASSEMBLY_STATS.out.versions.first())
+    ASSEMBLY_STATS ( ch_fastq )
+    ch_versions = ch_versions.mix(ASSEMBLY_STATS.out.versions.first())
 
     // PLOT_READ_LEN ( ASSEMBLY_STATS.out )
 
