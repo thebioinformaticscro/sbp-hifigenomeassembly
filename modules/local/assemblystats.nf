@@ -20,11 +20,11 @@ process ASSEMBLY_STATS {
     script:
     prefix = task.ext.prefix ?: "${meta.id}"
     """
-    zcat $input | assembly-stats > ${prefix}
+    zcat $input | assembly-stats >> ${prefix}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        assemblystats: \$(assembly-stats --version)
+        assemblystats: \$(assembly-stats -v)
     END_VERSIONS
     """
 
@@ -36,7 +36,7 @@ process ASSEMBLY_STATS {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        assemblystats: \$(assembly-stats --version)
+        assemblystats: \$(assembly-stats -v)
     END_VERSIONS
     """
 }
