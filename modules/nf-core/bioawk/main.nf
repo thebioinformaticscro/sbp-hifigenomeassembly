@@ -11,7 +11,7 @@ process BIOAWK {
     tuple val(meta), path(input)
 
     output:
-    tuple val(meta), path("*.csv")  , emit: output
+    tuple val(meta), path("*.csv")  , emit: csv
     path "versions.yml"             , emit: versions
 
     when:

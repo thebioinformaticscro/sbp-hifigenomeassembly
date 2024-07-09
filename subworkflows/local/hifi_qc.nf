@@ -22,7 +22,7 @@ workflow HIFI_QC {
     ASSEMBLY_STATS ( ch_fastq )
     ch_versions = ch_versions.mix(ASSEMBLY_STATS.out.versions.first())
 
-    PLOT_READ_LEN ( ASSEMBLY_STATS.out.txt )
+    PLOT_READ_LEN ( READ_LEN.out.csv )
 
 
     emit:
