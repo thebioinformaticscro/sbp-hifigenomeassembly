@@ -1,6 +1,7 @@
 process ASSEMBLY_STATS {
     tag "$meta.id"
     label 'process_low'
+    debug true
 
     conda "bioconda::assembly-stats=1.0.1"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
@@ -20,6 +21,9 @@ process ASSEMBLY_STATS {
     script:
     prefix = task.ext.prefix ?: "${meta.id}"
     """
+    echo $meta
+    echo $meta.fastq
+    # gunzip $input
     assembly-stats -t $input > ${prefix}
 
     cat <<-END_VERSIONS > versions.yml
