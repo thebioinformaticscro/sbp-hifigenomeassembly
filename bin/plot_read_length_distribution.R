@@ -39,7 +39,7 @@ projectDir <- getwd()
 # ============================================================================
 # Load data
 
-read_length_df <- read.delim(rl, header = FALSE)
+read_length_df <- read.delim(rl, sep = ",", header = FALSE)
 print(read_length_df)
 colnames(read_length_df) <- c("platform", "length")
 read_length_df$platform <- as.factor(read_length_df$platform)
