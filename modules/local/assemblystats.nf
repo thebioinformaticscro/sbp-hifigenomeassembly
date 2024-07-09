@@ -21,10 +21,8 @@ process ASSEMBLY_STATS {
     script:
     prefix = task.ext.prefix ?: "${meta.id}"
     """
-    echo ${meta.id}
-    echo ${meta.id}.fastq
-    # gunzip $input
-    assembly-stats -t $input > ${prefix}
+    gunzip $input
+    assembly-stats -t ${meta.id}.fastq > ${prefix}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
