@@ -3,7 +3,7 @@ process ASSEMBLY_STATS {
     label 'process_low'
     debug true
 
-    conda "bioconda::assembly-stats=1.0.1"
+    conda "conda-forge::r-cowplot=1.1.3 conda-forge::r-data.table=1.15.2 conda-forge::r-reshape2=1.4.4 conda-forge::r-tidyverse=2.0.0"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'oras://community.wave.seqera.io/library/assembly-stats:1.0.1--5635199ce6ee4b22' :
         'community.wave.seqera.io/library/assembly-stats:1.0.1--5635199ce6ee4b22' }"
