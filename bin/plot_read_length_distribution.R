@@ -43,7 +43,7 @@ read_length_df <- read.delim(rl, sep = ",", header = FALSE)
 print(read_length_df)
 colnames(read_length_df) <- c("platform", "length")
 read_length_df$platform <- as.factor(read_length_df$platform)
-read_length_df$platform <- factor(read_length_df$platform,level = c("PacBio_HiFi"))
+levels(read_length_df$platform) <- "PacBio_HiFi"
 
 # ============================================================================
 # Calculate average read-lengths 
