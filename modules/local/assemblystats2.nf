@@ -3,7 +3,7 @@ process ASSEMBLY_STATS2 {
     label 'process_low'
     debug true
 
-    conda "conda-forge::r-cowplot=1.1.3 conda-forge::r-data.table=1.15.2 conda-forge::r-reshape2=1.4.4 conda-forge::r-tidyverse=2.0.0"
+    conda "bioconda::assembly-stats=1.0.1"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'oras://community.wave.seqera.io/library/assembly-stats:1.0.1--5635199ce6ee4b22' :
         'community.wave.seqera.io/library/assembly-stats:1.0.1--5635199ce6ee4b22' }"
@@ -23,9 +23,7 @@ process ASSEMBLY_STATS2 {
     prefix = task.ext.prefix ?: "${meta.id}"
     """
     file_name=\$(basename $gfa)
-    echo \$file_name
     output_name=\${file_name%.gfa}
-    echo \$output_name
     awk '/^S/{print ">"\$2;print \$3}' "\${file_name}" > \${output_name}.fasta
     assembly-stats -t \${output_name}.fasta > \${output_name}.txt
 
