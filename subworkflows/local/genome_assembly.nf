@@ -23,8 +23,8 @@ workflow GENOME_ASSEMBLY {
     TO_FASTA ( HIFIASM.out.processed_contigs )
     ch_versions = ch_versions.mix(TO_FASTA.out.versions.first())
 
-    // FCS_FCSADAPTOR ( TO_FASTA.out.fasta )
-    // ch_versions = ch_versions.mix(FCS_FCSADAPTOR.out.versions.first())
+    FCS_FCSADAPTOR ( TO_FASTA.out.fasta )
+    ch_versions = ch_versions.mix(FCS_FCSADAPTOR.out.versions.first())
 
     // FCS_FCSGX ( FCS_FCSADAPTOR.out.fasta )
     // ch_versions = ch_versions.mix(FCS_FCSGX.out.versions.first())
