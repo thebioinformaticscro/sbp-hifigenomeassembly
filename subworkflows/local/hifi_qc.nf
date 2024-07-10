@@ -15,7 +15,8 @@ workflow HIFI_QC {
     ch_versions = Channel.empty()
     ch_optional_input = Channel.empty()
     ch_fastq_empty = ch_fastq.combine(ch_optional_input)
-
+    ch_fastq_empty.view()
+    
     READ_LEN ( ch_fastq_empty )
     ch_versions = ch_versions.mix(READ_LEN.out.versions.first())
 
