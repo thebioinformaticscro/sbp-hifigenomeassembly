@@ -13,7 +13,7 @@ workflow HIFI_QC {
 
     ch_fastq = ch_samplesheet.map { meta, file, fasta -> [meta, file] }
     ch_versions = Channel.empty()
-    ch_optional_input = Channel.of("")
+    ch_optional_input = Channel.of("/")
     ch_fastq_empty = ch_fastq.combine(ch_optional_input)
     ch_fastq_empty.view()
 
