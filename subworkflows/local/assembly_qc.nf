@@ -20,7 +20,7 @@ workflow ASSEMBLY_QC {
     ch_versions = ch_versions.mix(ASSEMBLY_SIZE.out.versions.first())
 
     ch_assembly_length_fasta = ch_assembly_fasta.combine(ASSEMBLY_SIZE.out.csv, by:0)
-
+    ch_assembly_length_fasta.view()
     COV_TABLE ( ch_assembly_length_fasta )
     ch_versions = ch_versions.mix(COV_TABLE.out.versions.first())
 
