@@ -12,7 +12,7 @@ process COV_TABLE_PLOT {
     tuple val(meta), path(cov_table), path(assembly_size)
 
     output:
-    tuple val(meta), path("*.bam"), emit: bam
+    tuple val(meta), path("*.csv"), emit: csv
     path "versions.yml"           , emit: versions
 
     when:
