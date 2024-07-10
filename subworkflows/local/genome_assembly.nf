@@ -26,8 +26,8 @@ workflow GENOME_ASSEMBLY {
     FCS_FCSADAPTOR ( TO_FASTA.out.fasta )
     ch_versions = ch_versions.mix(FCS_FCSADAPTOR.out.versions.first())
 
-    // FCS_FCSGX ( FCS_FCSADAPTOR.out.fasta )
-    // ch_versions = ch_versions.mix(FCS_FCSGX.out.versions.first())
+    FCS_FCSGX ( FCS_FCSADAPTOR.out.cleaned_assembly )
+    ch_versions = ch_versions.mix(FCS_FCSGX.out.versions.first())
 
     // REMOVE_CONTAMINANTS ( FCS_FCSADAPTOR.out.fasta, FCS_FCSGX.out.con_report )
     // ch_versions = ch_versions.mix(REMOVE_CONTAMINANTS.out.versions.first())

@@ -11,7 +11,7 @@ process FCS_FCSADAPTOR {
     tuple val(meta), path(assembly)
 
     output:
-    tuple val(meta), path("*.cleaned_sequences.fa.gz"), emit: cleaned_assembly, optional: true
+    tuple val(meta), path("*.cleaned_sequences.fa.gz"), emit: cleaned_assembly
     tuple val(meta), path("*.fcs_adaptor_report.txt") , emit: adaptor_report
     tuple val(meta), path("*.fcs_adaptor.log")        , emit: log
     tuple val(meta), path("*.pipeline_args.yaml")     , emit: pipeline_args
