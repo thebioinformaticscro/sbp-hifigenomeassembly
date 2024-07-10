@@ -18,19 +18,6 @@ process FCS_FCSADAPTOR {
     tuple val(meta), path("*.skipped_trims.jsonl")    , emit: skipped_trims
     path "versions.yml"                               , emit: versions
 
-    // Downstream handling of optional cleaned_assembly
-    //
-    // ch_cleaned_assembly  = FCS_FCSADAPTOR ( ch_input_assembly ).cleaned_assembly
-
-    // ch_input_assembly
-    // | join (ch_cleaned_assembly, by:0, remainder:true )
-    // | map { meta, input, cleaned ->
-    //     [ meta, cleaned ?: input ]
-    // }
-    // | set { ch_downstream_channel }
-
-    // FCS_FCSGX ( ch_downstream_channel )
-
     when:
     task.ext.when == null || task.ext.when
 
@@ -62,7 +49,7 @@ process FCS_FCSADAPTOR {
     cp "output/fcs_adaptor.log"           "${prefix}.fcs_adaptor.log"
     cp "output/pipeline_args.yaml"        "${prefix}.pipeline_args.yaml"
     cp "output/skipped_trims.jsonl"       "${prefix}.skipped_trims.jsonl"
-
+    
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         FCS-adaptor: $FCSADAPTOR_VERSION

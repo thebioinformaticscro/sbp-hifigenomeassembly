@@ -17,6 +17,15 @@ include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pi
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_hifigenomeassembly_pipeline'
 
+
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    CREATE CHANNELS FOR ADDITIONAL INPUT NEEDED
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -50,9 +59,10 @@ workflow ASSEMBLE {
     GENOME_ASSEMBLY (
         ch_samplesheet
     )
-}
-    // ch_versions = ch_versions.mix(GENOME_ASSEMBLY.out.versions.first())
-    // ch_assembly_fasta = GENOME_ASSEMBLY.out
+
+    ch_assembly_fasta = GENOME_ASSEMBLY.out.assembly
+    ch_multiqc_files = ch_multiqc_files.mix(GENOME_ASSEMBLY.out.assembly.map {it[1]})
+    ch_versions = ch_versions.mix(GENOME_ASSEMBLY.out.versions)
 
     // //
     // // SUBWORKFLOW: QC the genome assembly (contigs at this point)
@@ -157,7 +167,7 @@ workflow ASSEMBLE {
 //     emit:
 //     multiqc_report = MULTIQC.out.report.toList() // channel: /path/to/multiqc_report.html
 //     versions       = ch_versions                 // channel: [ path(versions.yml) ]
-// }
+}
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
