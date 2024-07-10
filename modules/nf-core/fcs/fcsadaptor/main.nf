@@ -54,6 +54,10 @@ process FCS_FCSADAPTOR {
         find output/cleaned_sequences/  -type f ! -name "*.gz" -exec gzip {} \\;
         cp output/cleaned_sequences/*     "${prefix}.cleaned_sequences.fa.gz"
     fi
+    if [[ \$num_contamination_lines -le 1 ]]; then
+        find output/cleaned_sequences/  -type f ! -name "*.gz" -exec gzip {} \\;
+        cp output/cleaned_sequences/*     "${prefix}.cleaned_sequences.fa.gz"
+    fi
     cp "output/fcs_adaptor_report.txt"    "${prefix}.fcs_adaptor_report.txt"
     cp "output/fcs_adaptor.log"           "${prefix}.fcs_adaptor.log"
     cp "output/pipeline_args.yaml"        "${prefix}.pipeline_args.yaml"
