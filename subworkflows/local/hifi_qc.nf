@@ -12,7 +12,6 @@ workflow HIFI_QC {
     main:
 
     ch_fastq = ch_samplesheet.map { meta, file, fasta -> [meta, file] }
-    //ch_fastq.view()
 
     ch_versions = Channel.empty()
 
@@ -26,9 +25,8 @@ workflow HIFI_QC {
 
 
     emit:
-    // n50                = ASSEMBLY_STATS.out.n50           // channel: [ val(meta), path(txt) ]
-    // read_len_plot      = PLOT_READ_LEN.out.read_len_plot  // channel: [ val(meta), path(png) ]
-
-    versions           = ch_versions                      // channel: path(versions.yml)
+    n50                = ASSEMBLY_STATS.out.txt        // channel: [ val(meta), path(txt) ]
+    read_len_plot      = PLOT_READ_LEN.out.pdf         // channel: [ val(meta), path(pdf) ]
+    versions           = ch_versions                   // channel: path(versions.yml)
 }
 
