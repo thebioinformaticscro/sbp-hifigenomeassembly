@@ -12,7 +12,7 @@ process COV_TABLE_PLOT {
     tuple val(meta), path(cov_table), path(assembly_size)
 
     output:
-    tuple val(meta), path("*.csv"), emit: csv
+    tuple val(meta), path("*.pdf"), emit: pdf
     path "versions.yml"           , emit: versions
 
     when:
@@ -26,6 +26,8 @@ process COV_TABLE_PLOT {
     assembly_size=\$(cat $assembly_size)
     cat $cov_table | sort -k3rV -t "," | awk -F "," -v len=\$assembly_size -v type=contig 'OFS=","{ print \$1,\$2,type,(sum+0)/len; sum+=\$3 }' > ${meta.id}_contig_lengths_table.csv
 
+    plot_contig_length_distribution.R "${meta.id}_contig_lengths_table.csv" ${meta.id}
+
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         covtableplot: $VERSION
@@ -36,7 +38,7 @@ process COV_TABLE_PLOT {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    touch ${prefix}.bam
+    touch ${prefix}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
