@@ -1,4 +1,5 @@
 include { BIOAWK as ASSEMBLY_SIZE          } from '../../modules/nf-core/bioawk/main'
+include { BIOAWK as COV_TABLE              } from '../../modules/nf-core/bioawk/main'
 include { COV_TABLE_PLOT                   } from '../../modules/local/covtableplot'
 include { BUSCO_BUSCO                      } from '../../modules/nf-core/busco/busco/main'
 include { BUSCO_GENERATEPLOT               } from '../../modules/nf-core/busco/generateplot/main' 
@@ -15,6 +16,10 @@ workflow ASSEMBLY_QC {
 
     ASSEMBLY_SIZE ( ch_assembly_fasta )
     ch_versions = ch_versions.mix(ASSEMBLY_SIZE.out.versions.first())
+
+    ch_assembly_length_fasta = ch_assembly_fasta.combine(ASSEMBLY_SIZE.out.csv, by:0)
+
+    ch_assembly_length_fasta.view()
 
     // COV_TABLE ( ch_assembly_fasta and the length of the assembly )
     // ch_versions = ch_versions.mix(COV_TABLE.out.versions.first())
