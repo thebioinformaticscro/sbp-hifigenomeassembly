@@ -13,7 +13,7 @@ workflow ASSEMBLY_QC {
     main:
 
     ch_versions = Channel.empty()
-    ch_optional_input = Channel.empty()
+    ch_optional_input = Channel.of("/")
     ch_fasta_empty = ch_assembly_fasta.combine(ch_optional_input)
 
     ASSEMBLY_SIZE ( ch_fasta_empty )
@@ -21,8 +21,8 @@ workflow ASSEMBLY_QC {
 
     ch_assembly_length_fasta = ch_assembly_fasta.combine(ASSEMBLY_SIZE.out.csv, by:0)
 
-    // COV_TABLE ( ch_assembly_length_fasta )
-    // ch_versions = ch_versions.mix(COV_TABLE.out.versions.first())
+    COV_TABLE ( ch_assembly_length_fasta )
+    ch_versions = ch_versions.mix(COV_TABLE.out.versions.first())
 
     // COV_TABLE_PLOT ( COV_TABLE.out.cov )
     // ch_versions = ch_versions.mix(COV_TABLE_PLOT.out.versions.first())
