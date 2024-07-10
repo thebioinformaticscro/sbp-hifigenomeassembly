@@ -30,7 +30,7 @@ process HIFIASM {
     script:
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
-    
+
     """
     hifiasm \\
         $args \\
@@ -44,27 +44,26 @@ process HIFIASM {
         hifiasm: \$(hifiasm --version 2>&1)
     END_VERSIONS
     """
-    }
-        stub:
-        def args = task.ext.args ?: ''
-        def prefix = task.ext.prefix ?: "${meta.id}"
-        """
-        touch ${prefix}.asm.r_utg.gfa
-        touch ${prefix}.asm.ec.bin
-        touch ${prefix}.asm.ovlp.source.bin
-        touch ${prefix}.asm.ovlp.reverse.bin
-        touch ${prefix}.asm.bp.p_ctg.gfa
-        touch ${prefix}.asm.p_utg.gfa
-        touch ${prefix}.asm.p_ctg.gfa
-        touch ${prefix}.asm.a_ctg.gfa
-        touch ${prefix}.asm.hap1.p_ctg.gfa
-        touch ${prefix}.asm.hap2.p_ctg.gfa
-        touch ${prefix}.stderr.log
+   
+    stub:
+    def args = task.ext.args ?: ''
+    def prefix = task.ext.prefix ?: "${meta.id}"
+    """
+    touch ${prefix}.asm.r_utg.gfa
+    touch ${prefix}.asm.ec.bin
+    touch ${prefix}.asm.ovlp.source.bin
+    touch ${prefix}.asm.ovlp.reverse.bin
+    touch ${prefix}.asm.bp.p_ctg.gfa
+    touch ${prefix}.asm.p_utg.gfa
+    touch ${prefix}.asm.p_ctg.gfa
+    touch ${prefix}.asm.a_ctg.gfa
+    touch ${prefix}.asm.hap1.p_ctg.gfa
+    touch ${prefix}.asm.hap2.p_ctg.gfa
+    touch ${prefix}.stderr.log
 
-        cat <<-END_VERSIONS > versions.yml
-        "${task.process}":
-            hifiasm: \$(hifiasm --version 2>&1)
-        END_VERSIONS
-        """
-
+    cat <<-END_VERSIONS > versions.yml
+    "${task.process}":
+        hifiasm: \$(hifiasm --version 2>&1)
+    END_VERSIONS
+    """
 }
