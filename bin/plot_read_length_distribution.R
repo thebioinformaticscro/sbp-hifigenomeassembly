@@ -26,7 +26,7 @@ sample_id <- args[2]
 # Load packages and sourced files
 library(tidyverse)
 library(cowplot)
-library(dplyr)
+library(plyr)
 
 # ============================================================================
 # Set global options
@@ -51,15 +51,15 @@ summary_df <- ddply(read_length_df, "platform", summarise, grp.mean=mean(length)
 
 # ============================================================================
 # Plot read-length distribution for all reads 
-total.length.plot <- ggplot(read_length_df, aes(x=length, fill=platform, color=platform)) + geom_histogram(binwidth=100, alpha=0.5, position="dodge") + geom_vline(aes(xintercept=grp.mean, color=platform), data=summary_df, linetype="dashed", linewidth =0.2) + scale_x_continuous(labels = comma) + scale_y_continuous(labels = comma) +  labs(x = "Read length (bp)", y = "Count") + theme_bw()
+total.length.plot <- ggplot(read_length_df, aes(x=length, fill=platform, color=platform)) + geom_histogram(binwidth=100, alpha=0.5, position="dodge") + geom_vline(aes(xintercept=grp.mean, color=platform), data=summary_df, linetype="dashed", linewidth =0.2) +  labs(x = "Read length (bp)", y = "Count") + theme_bw()
 
 # ============================================================================
 # Plot read-length distribution for reads <= 20kb in length 
-kb.length.plot <- ggplot(read_length_df, aes(x=length, fill=platform, color=platform)) + geom_histogram(binwidth=50, alpha=0.5, position="dodge") + geom_vline(aes(xintercept=grp.mean, color=platform), data=summary_df, linetype="dashed", linewidth=0.2) + scale_x_continuous(labels = comma, limit = c(0,20000)) + scale_y_continuous(labels = comma) + labs(x = "Read length (bp)", y = "Count") + theme_bw()
+kb.length.plot <- ggplot(read_length_df, aes(x=length, fill=platform, color=platform)) + geom_histogram(binwidth=50, alpha=0.5, position="dodge") + geom_vline(aes(xintercept=grp.mean, color=platform), data=summary_df, linetype="dashed", linewidth=0.2) + labs(x = "Read length (bp)", y = "Count") + theme_bw()
 
 # ============================================================================
 # Merge the above two plots into a two-panel figure
-plot <- plot_grid(total.length.plot, 20 kb.length.plot, ncol = 1)
-pdf(paste0(sample_id, ".read.length.pdf"),width=6,height=8,paper='special')
+plot <- plot_grid(total.length.plot, kb.length.plot, ncol = 1)
+pdf(paste0(sample_id, ".read.length.pdf"), width = 6, height = 8, paper = "special")
 print(plot)
 dev.off()
