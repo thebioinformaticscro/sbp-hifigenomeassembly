@@ -9,22 +9,22 @@ process HIFIASM {
 
     input:
     tuple val(meta), path(reads)
-    path  paternal_kmer_dump
-    path  maternal_kmer_dump
-    path  hic_read1
-    path  hic_read2
+    // path  paternal_kmer_dump
+    // path  maternal_kmer_dump
+    // path  hic_read1
+    // path  hic_read2
 
     output:
     tuple val(meta), path("*.r_utg.gfa")       , emit: raw_unitigs
     tuple val(meta), path("*.ec.bin")          , emit: corrected_reads
     tuple val(meta), path("*.ovlp.source.bin") , emit: source_overlaps
     tuple val(meta), path("*.ovlp.reverse.bin"), emit: reverse_overlaps
-    tuple val(meta), path("*.bp.p_ctg.gfa")    , emit: processed_contigs, optional: true
-    tuple val(meta), path("*.p_utg.gfa")       , emit: processed_unitigs, optional: true
+    // tuple val(meta), path("*.bp.p_ctg.gfa")    , emit: processed_contigs, optional: true
+    // tuple val(meta), path("*.p_utg.gfa")       , emit: processed_unitigs, optional: true
     tuple val(meta), path("*.asm.p_ctg.gfa")   , emit: primary_contigs  , optional: true
-    tuple val(meta), path("*.asm.a_ctg.gfa")   , emit: alternate_contigs, optional: true
-    tuple val(meta), path("*.hap1.p_ctg.gfa")  , emit: paternal_contigs , optional: true
-    tuple val(meta), path("*.hap2.p_ctg.gfa")  , emit: maternal_contigs , optional: true
+    // tuple val(meta), path("*.asm.a_ctg.gfa")   , emit: alternate_contigs, optional: true
+    // tuple val(meta), path("*.hap1.p_ctg.gfa")  , emit: paternal_contigs , optional: true
+    // tuple val(meta), path("*.hap2.p_ctg.gfa")  , emit: maternal_contigs , optional: true
     tuple val(meta), path("*.log")             , emit: log
     path  "versions.yml"                       , emit: versions
 

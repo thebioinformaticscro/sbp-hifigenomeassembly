@@ -6,13 +6,12 @@ include { PLOT_READ_LEN          } from '../../modules/local/plotreadlen'
 workflow HIFI_QC {
 
     take:
-    
+
     ch_samplesheet // channel: [ val(meta), path(fastq.gz), path(ref.fasta) ]
 
     main:
 
     ch_fastq = ch_samplesheet.map { meta, file, fasta -> [meta, file] }
-
     ch_versions = Channel.empty()
 
     READ_LEN ( ch_fastq )

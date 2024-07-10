@@ -43,16 +43,14 @@ workflow ASSEMBLE {
     ch_multiqc_files = ch_multiqc_files.mix(HIFI_QC.out.n50.map {it[1]})
     ch_multiqc_files = ch_multiqc_files.mix(HIFI_QC.out.read_len_plot.map {it[1]})
     ch_versions = ch_versions.mix(HIFI_QC.out.versions)
-    ch_multiqc_files.view()
-}
+
     //
     // SUBWORKFLOW: Assemble PacBio HiFi reads
     //
-    // GENOME_ASSEMBLY (
-    //     ch_samplesheet,
-    //     ch_fastq // path to HiFi WGS fastq file
-
-    // )
+    GENOME_ASSEMBLY (
+        ch_samplesheet
+    )
+}
     // ch_versions = ch_versions.mix(GENOME_ASSEMBLY.out.versions.first())
     // ch_assembly_fasta = GENOME_ASSEMBLY.out
 
