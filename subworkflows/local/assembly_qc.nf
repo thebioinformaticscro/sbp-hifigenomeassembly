@@ -13,8 +13,10 @@ workflow ASSEMBLY_QC {
     main:
 
     ch_versions = Channel.empty()
+    ch_optional_input = Channel.empty()
+    ch_fasta_empty = ch_assembly_fasta.combine(ch_optional_input)
 
-    ASSEMBLY_SIZE ( ch_assembly_fasta )
+    ASSEMBLY_SIZE ( ch_fasta_empty )
     ch_versions = ch_versions.mix(ASSEMBLY_SIZE.out.versions.first())
 
     ch_assembly_length_fasta = ch_assembly_fasta.combine(ASSEMBLY_SIZE.out.csv, by:0)
