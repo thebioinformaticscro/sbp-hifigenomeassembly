@@ -1,5 +1,5 @@
 include { HIFIASM                        } from '../../modules/nf-core/hifiasm/main'
-include { ASSEMBLY_STATS as TO_FASTA     } from '../../modules/local/assemblystats'
+include { ASSEMBLY_STATS2 as TO_FASTA    } from '../../modules/local/assemblystats2'
 include { FCS_FCSADAPTOR                 } from '../../modules/nf-core/fcs/fcsadaptor/main'  
 include { FCS_FCSGX                      } from '../../modules/nf-core/fcs/fcsgx/main'
 include { REMOVE_CONTAMINANTS            } from '../../modules/local/removecontaminants'
@@ -20,8 +20,8 @@ workflow GENOME_ASSEMBLY {
     HIFIASM ( ch_fastq )
     ch_versions = ch_versions.mix(HIFIASM.out.versions.first())
 
-    // TO_FASTA ( HIFIASM.out.gfa )
-    // ch_versions = ch_versions.mix(TO_FASTA.out.versions.first())
+    TO_FASTA ( HIFIASM.out.processed_contigs )
+    ch_versions = ch_versions.mix(TO_FASTA.out.versions.first())
 
     // FCS_FCSADAPTOR ( TO_FASTA.out.fasta )
     // ch_versions = ch_versions.mix(FCS_FCSADAPTOR.out.versions.first())
