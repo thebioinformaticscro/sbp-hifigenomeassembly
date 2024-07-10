@@ -19,9 +19,7 @@ workflow ASSEMBLY_QC {
 
     ch_assembly_length_fasta = ch_assembly_fasta.combine(ASSEMBLY_SIZE.out.csv, by:0)
 
-    ch_assembly_length_fasta.view()
-
-    // COV_TABLE ( ch_assembly_fasta and the length of the assembly )
+    // COV_TABLE ( ch_assembly_length_fasta )
     // ch_versions = ch_versions.mix(COV_TABLE.out.versions.first())
 
     // COV_TABLE_PLOT ( COV_TABLE.out.cov )

@@ -8,7 +8,7 @@ process BIOAWK {
         'biocontainers/bioawk:1.0--h5bf99c6_6' }"
 
     input:
-    tuple val(meta), path(input)
+    tuple val(meta), path(input), path(optional_file)
 
     output:
     tuple val(meta), path("*.csv")  , emit: csv
