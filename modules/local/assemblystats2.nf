@@ -27,7 +27,7 @@ process ASSEMBLY_STATS2 {
     output_name=\${file_name%.gfa}
     echo \$output_name
     awk '/^S/{print ">"\$2;print \$3}' "\${file_name}" > \${output_name}.fa
-    assembly-stats -t \${output_name} > \${output_name}.txt
+    assembly-stats -t \${output_name}.fa > \${output_name}.txt
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
