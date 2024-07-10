@@ -19,13 +19,15 @@ workflow ASSEMBLY_QC {
     ASSEMBLY_SIZE ( ch_fasta_empty )
     ch_versions = ch_versions.mix(ASSEMBLY_SIZE.out.versions.first())
 
-    ch_assembly_length_fasta = ch_assembly_fasta.combine(ASSEMBLY_SIZE.out.csv, by:0)
-    ch_assembly_length_fasta.view()
-    COV_TABLE ( ch_assembly_length_fasta )
+    ch_assembly_length_empty = ch_assembly_fasta.combine(ch_optional_input)
+
+    COV_TABLE ( ch_assembly_length_empty )
     ch_versions = ch_versions.mix(COV_TABLE.out.versions.first())
 
-    // COV_TABLE_PLOT ( COV_TABLE.out.cov )
-    // ch_versions = ch_versions.mix(COV_TABLE_PLOT.out.versions.first())
+    ch_assembly_length_fasta = COV_TABLE.out.csv.combine(ASSEMBLY_SIZE.out.csv, by:0)
+
+    COV_TABLE_PLOT ( ch_assembly_length_fasta )
+    ch_versions = ch_versions.mix(COV_TABLE_PLOT.out.versions.first())
 
     // BUSCO_BUSCO ( ch_assembly_fasta )
     // ch_versions = ch_versions.mix(BUSCO_BUSCO.out.versions.first())
