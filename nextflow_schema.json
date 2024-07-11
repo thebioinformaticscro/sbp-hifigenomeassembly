@@ -46,6 +46,35 @@
                 }
             }
         },
+        "busco_options": {
+            "title": "BUSCO options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "busco_mode": {
+                    "type": "string",
+                    "default": "genome",
+                    "description": "The mode to run Busco in. One of genome, proteins, or transcriptome"
+                },
+                "busco_lineage": {
+                    "type": "string",
+                    "default": "auto",
+                    "description": "The BUSCO lineage to use, or \\\"auto\\\" to automatically select lineage\""
+                },
+                "busco_lineages_path": {
+                    "type": "string",
+                    "default": "[]",
+                    "description": "Path to local BUSCO lineages directory."
+                },
+                "busco_config": {
+                    "type": "string",
+                    "default": "[]",
+                    "description": "Path to BUSCO config file."
+                }
+            },
+            "fa_icon": "fas fa-chart-pie"
+        },
         "institutional_config_options": {
             "title": "Institutional config options",
             "type": "object",
