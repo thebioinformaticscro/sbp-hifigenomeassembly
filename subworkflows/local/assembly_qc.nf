@@ -29,8 +29,8 @@ workflow ASSEMBLY_QC {
     COV_TABLE_PLOT ( ch_assembly_length_fasta )
     ch_versions = ch_versions.mix(COV_TABLE_PLOT.out.versions.first())
 
-    // BUSCO_BUSCO ( ch_assembly_fasta )
-    // ch_versions = ch_versions.mix(BUSCO_BUSCO.out.versions.first())
+    BUSCO_BUSCO ( ch_assembly_fasta )
+    ch_versions = ch_versions.mix(BUSCO_BUSCO.out.versions.first())
 
     // BUSCO_GENERATEPLOT ( BUSCO_BUSCO.out.summary )
     // ch_versions = ch_versions.mix(BUSCO_GENERATEPLOT.out.versions.first())
