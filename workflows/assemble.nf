@@ -54,22 +54,22 @@ workflow ASSEMBLE {
     ch_versions = ch_versions.mix(HIFI_QC.out.versions)
 
     //
-    // SUBWORKFLOW: Assemble PacBio HiFi reads
+    //SUBWORKFLOW: Assemble PacBio HiFi reads
     //
-    // GENOME_ASSEMBLY (
-    //     ch_samplesheet
-    // )
+    GENOME_ASSEMBLY (
+        ch_samplesheet
+    )
 
-    // ch_assembly_fasta = GENOME_ASSEMBLY.out.assembly
-    // ch_multiqc_files = ch_multiqc_files.mix(GENOME_ASSEMBLY.out.assembly.map {it[1]})
-    // ch_versions = ch_versions.mix(GENOME_ASSEMBLY.out.versions)
+    ch_assembly_fasta = GENOME_ASSEMBLY.out.assembly
+    ch_multiqc_files = ch_multiqc_files.mix(GENOME_ASSEMBLY.out.assembly.map {it[1]})
+    ch_versions = ch_versions.mix(GENOME_ASSEMBLY.out.versions)
 
     //
-    // SUBWORKFLOW: QC the genome assembly (contigs at this point)
+    //SUBWORKFLOW: QC the genome assembly (contigs at this point)
     //
-    // ASSEMBLY_QC (
-    //     ch_assembly_fasta              // path to genome assembly 
-    // )
+    ASSEMBLY_QC (
+        ch_assembly_fasta              // path to genome assembly 
+    )
     // ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.zip.collect{it[1]})
     // ch_versions = ch_versions.mix(ASSEMBLY_QC.out.versions.first())
 
