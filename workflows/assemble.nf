@@ -71,7 +71,8 @@ workflow ASSEMBLE {
         ch_assembly_fasta              // path to genome assembly 
     )
     
-    ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.zip.collect{it[1]})
+    ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.cov_plot.map {it[1]})
+    ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.busco_plot.map {it[1]})
     ch_versions = ch_versions.mix(ASSEMBLY_QC.out.versions.first())
 
     // //
