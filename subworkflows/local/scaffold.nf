@@ -19,7 +19,7 @@ workflow SCAFFOLD {
     )
     ch_versions = ch_versions.mix(RAGTAG.out.versions.first())
 
-    PREP_FASTAS ( RAGTAG.out.scaffold,
+    PREP_FASTAS ( RAGTAG.out.fasta,
                   ch_ref,
                   ch_chr_names 
     )
