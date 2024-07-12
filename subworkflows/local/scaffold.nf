@@ -23,7 +23,7 @@ workflow SCAFFOLD {
                   ch_ref,
                   ch_chr_names 
     )
-    ch_versions = ch_versions.mix(PREP_FASTA.out.versions.first())
+    ch_versions = ch_versions.mix(PREP_FASTAS.out.versions.first())
 
     // emit:
     // // TODO nf-core: edit emitted channels
