@@ -7,7 +7,7 @@ process BUSCO_GENERATEPLOT {
         'biocontainers/busco:5.7.0--pyhdfd78af_1' }"
 
     input:
-    tuple val(meta), path(short_summary_txt), stageAs: 'busco/*'
+    tuple val(meta), path(short_summary_txt)
 
     output:
     path '*.png'        , emit: png
@@ -20,6 +20,8 @@ process BUSCO_GENERATEPLOT {
     def args    = task.ext.args     ?: ''
     def prefix  = task.ext.prefix   ?: 'busco_figure'
     """
+    mkdir -p busco/
+    mv $short_summary_txt busco/
     generate_plot.py \\
         $args \\
         -wd busco
