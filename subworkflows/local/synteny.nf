@@ -14,7 +14,7 @@ workflow SYNTENY {
     ch_ref = ch_samplesheet.map { meta, file, fasta -> [fasta] }
     ch_versions = Channel.empty()
 
-    ALIGN_FOR_SYNTENY ( ch_scaffold_fasta,
+    ALIGN_FOR_SYNTENY ( ch_assembly_scaffold,
                         ch_ref
     )
     ch_versions = ch_versions.mix(ALIGN_FOR_SYNTENY.out.versions.first())
