@@ -3,8 +3,8 @@ process BUSCO_GENERATEPLOT {
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/busco:5.7.1--pyhdfd78af_0':
-        'biocontainers/busco:5.7.1--pyhdfd78af_0' }"
+        'https://depot.galaxyproject.org/singularity/busco:5.7.0--pyhdfd78af_1':
+        'biocontainers/busco:5.7.0--pyhdfd78af_1' }"
 
     input:
     path short_summary_txt, stageAs: 'busco/*'
