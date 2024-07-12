@@ -2,7 +2,7 @@ process RAGTAG {
     tag "$meta.id"
     label 'process_high'
 
-    conda "${moduleDir}/environment.yml"
+    conda "bioconda::ragtag=2.1.0"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'oras://community.wave.seqera.io/library/ragtag:2.1.0--0ad61b661719a8ae' :
         'community.wave.seqera.io/library/ragtag:2.1.0--0ad61b661719a8ae' }"

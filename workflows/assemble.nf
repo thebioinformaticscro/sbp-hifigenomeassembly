@@ -76,15 +76,15 @@ workflow ASSEMBLE {
     ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.busco_plot.map {it[1]})
     ch_versions = ch_versions.mix(ASSEMBLY_QC.out.versions.first())
 
-    // //
-    // // SUBWORKFLOW: Synteny analysis
-    // //
-    // SYNTENY (
-    //     ch_scaffold_fasta // path to genome scaffold
-
-    // )
-    // ch_multiqc_files = ch_multiqc_files.mix(SYNTENY.out.zip.collect{it[1]})
-    // ch_versions = ch_versions.mix(SYNTENY.out.versions.first())
+    //
+    // SUBWORKFLOW: Synteny analysis
+    //
+    SYNTENY (
+        ch_samplesheet,
+        ch_assembly_scaffold // path to genome scaffold
+    )
+    ch_multiqc_files = ch_multiqc_files.mix(SYNTENY.out.zip.collect{it[1]})
+    ch_versions = ch_versions.mix(SYNTENY.out.versions.first())
 
     // //
     // // SUBWORKFLOW: SV analysis
