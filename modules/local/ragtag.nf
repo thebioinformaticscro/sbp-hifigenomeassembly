@@ -31,7 +31,7 @@ process RAGTAG {
         $args \\
         -u \\
         -t $task.cpus \\
-        -o ${meta.id}_ragtag_output
+        -o ${meta.id}_ragtag_output \\
         $ref \\
         ${meta.id}.assembly.fasta
 
