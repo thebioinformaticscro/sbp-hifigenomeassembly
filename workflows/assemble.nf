@@ -83,8 +83,8 @@ workflow ASSEMBLE {
         ch_samplesheet,
         ch_assembly_scaffold // path to genome scaffold
     )
-    ch_multiqc_files = ch_multiqc_files.mix(SYNTENY.out.zip.collect{it[1]})
-    ch_versions = ch_versions.mix(SYNTENY.out.versions.first())
+    // ch_multiqc_files = ch_multiqc_files.mix(SYNTENY.out.zip.collect{it[1]})
+    // ch_versions = ch_versions.mix(SYNTENY.out.versions.first())
 
     // //
     // // SUBWORKFLOW: SV analysis
