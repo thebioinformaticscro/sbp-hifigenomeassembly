@@ -10,7 +10,7 @@ process PREP_FASTAS {
     input:
     tuple val(meta), path(scaffold)
     path(ref)
-    path(chr_names)
+    file(chr_names)
 
     output:
     path("*ref.fasta")                        , emit: renamed_reference
