@@ -70,8 +70,9 @@ workflow ASSEMBLE {
     ASSEMBLY_QC (
         ch_assembly_fasta              // path to genome assembly 
     )
-    // ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.zip.collect{it[1]})
-    // ch_versions = ch_versions.mix(ASSEMBLY_QC.out.versions.first())
+    
+    ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.zip.collect{it[1]})
+    ch_versions = ch_versions.mix(ASSEMBLY_QC.out.versions.first())
 
     // //
     // // SUBWORKFLOW: Scaffold the genome assembly
