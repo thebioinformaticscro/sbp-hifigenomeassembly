@@ -12,8 +12,11 @@ process RAGTAG {
     path(ref)
 
     output:
-    tuple val(meta), path("*.fasta"), emit: fasta
-    path "versions.yml"             , emit: versions
+    tuple val(meta), path("*_ragtag_output/ragtag.scaffold.stats")    , emit: stats 
+    tuple val(meta), path("*_ragtag_output/ragtag.scaffold.fasta")    , emit: fasta 
+    tuple val(meta), path("*_ragtag_output/ragtag.scaffold.agp")      , emit: agp 
+    tuple val(meta), path("*_ragtag_output")                          , emit: ragtag_dir
+    path "versions.yml"                                               , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -28,6 +31,7 @@ process RAGTAG {
         $args \\
         -u \\
         -t $task.cpus \\
+        -o ${meta.id}_ragtag_output
         $ref \\
         ${meta.id}.assembly.fasta
 
