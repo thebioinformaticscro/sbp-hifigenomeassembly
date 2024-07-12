@@ -54,18 +54,20 @@ workflow ASSEMBLE {
     ch_versions = ch_versions.mix(HIFI_QC.out.versions)
 
     //
-    //SUBWORKFLOW: Assemble PacBio HiFi reads
+    //SUBWORKFLOW: Assemble PacBio HiFi reads and scaffold using a reference genome
     //
     GENOME_ASSEMBLY (
         ch_samplesheet
     )
 
     ch_assembly_fasta = GENOME_ASSEMBLY.out.assembly
+    ch_assembly_scaffold = GENOME_ASSEMBLY.out.scaffold
     ch_multiqc_files = ch_multiqc_files.mix(GENOME_ASSEMBLY.out.assembly.map {it[1]})
+    ch_multiqc_files = ch_multiqc_files.mix(GENOME_ASSEMBLY.out.scaffold.map {it[1]})
     ch_versions = ch_versions.mix(GENOME_ASSEMBLY.out.versions)
 
     //
-    //SUBWORKFLOW: QC the genome assembly (contigs at this point)
+    //SUBWORKFLOW: QC the genome assembly (contigs and scaffolded assembly)
     //
     ASSEMBLY_QC (
         ch_assembly_fasta              // path to genome assembly 
@@ -74,18 +76,6 @@ workflow ASSEMBLE {
     ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.cov_plot.map {it[1]})
     ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.busco_plot.map {it[1]})
     ch_versions = ch_versions.mix(ASSEMBLY_QC.out.versions.first())
-
-    //
-    // SUBWORKFLOW: Scaffold the genome assembly
-    //
-    SCAFFOLD (
-        ch_assembly_fasta,      
-        ch_samplesheet,
-        params.chr_names
-    )
-    
-    // ch_versions = ch_versions.mix(SCAFFOLD.out.versions.first())
-    // ch_scaffold_fasta = SCAFFOLD.out
 
     // //
     // // SUBWORKFLOW: Synteny analysis
