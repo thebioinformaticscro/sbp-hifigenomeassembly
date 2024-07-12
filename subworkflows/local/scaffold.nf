@@ -11,7 +11,7 @@ workflow SCAFFOLD {
     
     main:
 
-    ch_ref = ch_samplesheet.map { meta, file, fasta -> [meta, fasta] }
+    ch_ref = ch_samplesheet.map { meta, file, fasta -> [fasta] }
     ch_versions = Channel.empty()
 
     RAGTAG ( ch_assembly_fasta,
