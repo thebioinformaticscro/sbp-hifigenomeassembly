@@ -1,4 +1,4 @@
-process BIOAWK {
+process PREP_FASTAS {
     tag "$meta.id"
     label 'process_medium'
 
@@ -8,11 +8,14 @@ process BIOAWK {
         'biocontainers/bioawk:1.0--h5bf99c6_6' }"
 
     input:
-    tuple val(meta), path(input), path(optional_file)
+    tuple val(meta), path(scaffold)
+    path(ref)
+    path(chr_names)
 
     output:
-    tuple val(meta), path("*.{csv,fasta}")  , emit: csv
-    path "versions.yml"                     , emit: versions
+    path("*ref.fasta")                        , emit: renamed_reference
+    tuple val(meta), path("*scaffold.fasta")  , emit: renamed_scaffold
+    path "versions.yml"                       , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
@@ -23,11 +26,12 @@ process BIOAWK {
 
     def VERSION = '1.0' // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
     """
-    bioawk \\
-        $args \\
-        $input \\
-        > ${prefix}
-
+    ref_name=\$(basename -s .fasta $ref)
+    sed 's/_RagTag//' $scaffold > ${meta.id}_noragtag.scaffold.fasta
+    for i in `cat $chr_names`; do
+        cat $ref | bioawk -c fastx -v chr="\$i" '\$name==chr{print ">chr"\$name; print \$seq}' >> renamed_\${ref_name}.ref.fasta
+        cat ${meta.id}_noragtag.scaffold.fasta | bioawk -c fastx -v chr="\$i" '\$name==chr{print ">"\$name; print \$seq}' >> renamed_${meta.id}.scaffold.fasta
+    done
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         bioawk: $VERSION

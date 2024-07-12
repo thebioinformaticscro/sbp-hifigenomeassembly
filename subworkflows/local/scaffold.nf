@@ -1,5 +1,5 @@
-include { RAGTAG                        } from '../../modules/local/ragtag'
-include { BIOAWK as PREP_FASTA          } from '../../modules/nf-core/bioawk/main'
+include { RAGTAG                         } from '../../modules/local/ragtag'
+include { PREP_FASTAS                    } from '../../modules/local/prepfastas'
 
 workflow SCAFFOLD {
 
@@ -19,10 +19,11 @@ workflow SCAFFOLD {
     )
     ch_versions = ch_versions.mix(RAGTAG.out.versions.first())
 
-    // PREP_FASTA ( RAGTAG.out.scaffold,
-    //              ch_ref 
-    // )
-    // ch_versions = ch_versions.mix(PREP_FASTA.out.versions.first())
+    PREP_FASTAS ( RAGTAG.out.scaffold,
+                  ch_ref,
+                  ch_chr_names 
+    )
+    ch_versions = ch_versions.mix(PREP_FASTA.out.versions.first())
 
     // emit:
     // // TODO nf-core: edit emitted channels
