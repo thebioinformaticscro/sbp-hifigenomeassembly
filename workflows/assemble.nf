@@ -7,7 +7,6 @@
 include { HIFI_QC                } from '../subworkflows/local/hifi_qc'
 include { GENOME_ASSEMBLY        } from '../subworkflows/local/genome_assembly'
 include { ASSEMBLY_QC            } from '../subworkflows/local/assembly_qc'
-include { SCAFFOLD               } from '../subworkflows/local/scaffold'
 include { SYNTENY                } from '../subworkflows/local/synteny'
 include { REPEATS                } from '../subworkflows/local/repeats'
 
