@@ -26,7 +26,7 @@ process PREP_FASTAS {
 
     def VERSION = '1.0' // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
     """
-    ref_name=\$(basename -s .fasta $ref)
+    ref_name=\$(basename $ref .fasta)
     sed 's/_RagTag//' $scaffold > ${meta.id}_noragtag.scaffold.fasta
     for i in `cat $chr_names`; do
         cat $ref | bioawk -c fastx -v chr="\$i" '\$name==chr{print ">chr"\$name; print \$seq}' >> renamed_\${ref_name}.ref.fasta
