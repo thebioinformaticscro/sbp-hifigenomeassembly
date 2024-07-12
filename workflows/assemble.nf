@@ -75,13 +75,13 @@ workflow ASSEMBLE {
     ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.busco_plot.map {it[1]})
     ch_versions = ch_versions.mix(ASSEMBLY_QC.out.versions.first())
 
-    // //
-    // // SUBWORKFLOW: Scaffold the genome assembly
-    // //
-    // SCAFFOLD (
-    //     ch_assembly_fasta // path to genome assembly
-
-    // )
+    //
+    // SUBWORKFLOW: Scaffold the genome assembly
+    //
+    SCAFFOLD (
+        ch_assembly_fasta              // path to genome assembly
+    )
+    
     // ch_versions = ch_versions.mix(SCAFFOLD.out.versions.first())
     // ch_scaffold_fasta = SCAFFOLD.out
 
