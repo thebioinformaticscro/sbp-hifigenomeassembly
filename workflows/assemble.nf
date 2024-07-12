@@ -79,7 +79,9 @@ workflow ASSEMBLE {
     // SUBWORKFLOW: Scaffold the genome assembly
     //
     SCAFFOLD (
-        ch_assembly_fasta              // path to genome assembly
+        ch_assembly_fasta,      
+        ch_samplesheet,
+        params.chr_names
     )
     
     // ch_versions = ch_versions.mix(SCAFFOLD.out.versions.first())
