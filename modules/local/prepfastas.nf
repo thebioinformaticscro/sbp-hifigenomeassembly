@@ -32,6 +32,7 @@ process PREP_FASTAS {
     echo \$(cat ${prefix}_renamed.scaffold.fasta | grep ">chr")
     ref_name=\$(basename $ref .fasta)
     for i in `cat $chr_names`; do
+        echo \$i
         cat $ref | bioawk -c fastx -v chr="\$i" \'\$name==chr{print ">"\$name; print \$seq}\' >> \${ref_name}.ref.fasta
         cat ${prefix}_renamed.scaffold.fasta | bioawk -c fastx -v chr="\$i" \'\$name==chr{print ">"\$name; print \$seq}\' >> ${prefix}.scaffolded.fasta
     done
