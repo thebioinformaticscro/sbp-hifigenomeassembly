@@ -28,11 +28,10 @@ process PREP_FASTAS {
     def VERSION = '1.0' // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
     """
     sed 's/_RagTag//' $scaffold > ${prefix}_renamed.scaffold.fasta
-    ref_name=\$(basename -s .fasta $ref)
-    assembly_name=\$(basename -s .fasta $scaffold)
+    ref_name=\$(basename $ref .fasta)
     for i in `cat $chr_names`; do
         cat $ref | bioawk -c fastx -v chr="\$i" '\$name==chr{print \$name; print \$seq}' >> \${ref_name}.ref.fasta
-        cat ${prefix}_renamed.scaffold.fasta | bioawk -c fastx -v chr="\$i" '\$name==chr{print \$name; print \$seq}' >> \${assembly_name}.scaffolded.fasta
+        cat ${prefix}_renamed.scaffold.fasta | bioawk -c fastx -v chr="\$i" '\$name==chr{print \$name; print \$seq}' >> ${prefix}.scaffolded.fasta
     done
 
     cat <<-END_VERSIONS > versions.yml
