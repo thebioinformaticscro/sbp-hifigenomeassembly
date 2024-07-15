@@ -1,6 +1,7 @@
 process PREP_FASTAS {
     tag "$meta.id"
     label 'process_low'
+    debug true
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
@@ -28,10 +29,11 @@ process PREP_FASTAS {
     def VERSION = '1.0' // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
     """
     sed 's/_RagTag//' $scaffold > ${prefix}_renamed.scaffold.fasta
+    echo \$(cat ${prefix}_renamed.scaffold.fasta | grep ">")
     ref_name=\$(basename $ref .fasta)
     for i in `cat $chr_names`; do
-        cat $ref | bioawk -c fastx -v chr="\$i" '\$name==chr{print \$name; print \$seq}' >> \${ref_name}.ref.fasta
-        cat ${prefix}_renamed.scaffold.fasta | bioawk -c fastx -v chr="\$i" '\$name==chr{print \$name; print \$seq}' >> ${prefix}.scaffolded.fasta
+        cat $ref | bioawk -c fastx -v chr="\$i" '\$name==chr{print ">"\$name; print \$seq}' >> \${ref_name}.ref.fasta
+        cat ${prefix}_renamed.scaffold.fasta | bioawk -c fastx -v chr="\$i" '\$name==chr{print ">"\$name; print \$seq}' >> ${prefix}.scaffolded.fasta
     done
 
     cat <<-END_VERSIONS > versions.yml
