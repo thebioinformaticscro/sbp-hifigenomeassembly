@@ -63,7 +63,7 @@ workflow ASSEMBLE {
     ch_assembly_scaffold = GENOME_ASSEMBLY.out.corrected_scaffold
     ch_corrected_ref = GENOME_ASSEMBLY.out.corrected_ref
     ch_multiqc_files = ch_multiqc_files.mix(GENOME_ASSEMBLY.out.assembly.map {it[1]})
-    ch_multiqc_files = ch_multiqc_files.mix(GENOME_ASSEMBLY.out.scaffold.map {it[1]})
+    ch_multiqc_files = ch_multiqc_files.mix(GENOME_ASSEMBLY.out.corrected_scaffold.map {it[1]})
     ch_versions = ch_versions.mix(GENOME_ASSEMBLY.out.versions)
 
     //
