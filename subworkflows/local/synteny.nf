@@ -19,10 +19,11 @@ workflow SYNTENY {
     )
     ch_versions = ch_versions.mix(ALIGN_FOR_SYNTENY.out.versions.first())
 
-    // SYRI ( ALIGN_FOR_SYNTENY.out.sam,
-    //        ch_ref
-    //  )
-    // ch_versions = ch_versions.mix(SYRI.out.versions.first())
+    SYRI ( ALIGN_FOR_SYNTENY.out.sam,
+           ch_ref,
+           ch_assembly_scaffold
+     )
+    ch_versions = ch_versions.mix(SYRI.out.versions.first())
 
     // emit:
     // // TODO nf-core: edit emitted channels
