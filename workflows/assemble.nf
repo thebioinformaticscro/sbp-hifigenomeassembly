@@ -60,7 +60,8 @@ workflow ASSEMBLE {
     )
 
     ch_assembly_fasta = GENOME_ASSEMBLY.out.assembly
-    ch_assembly_scaffold = GENOME_ASSEMBLY.out.scaffold
+    ch_assembly_scaffold = GENOME_ASSEMBLY.out.corrected_scaffold
+    ch_corrected_ref = GENOME_ASSEMBLY.out.corrected_ref
     ch_multiqc_files = ch_multiqc_files.mix(GENOME_ASSEMBLY.out.assembly.map {it[1]})
     ch_multiqc_files = ch_multiqc_files.mix(GENOME_ASSEMBLY.out.scaffold.map {it[1]})
     ch_versions = ch_versions.mix(GENOME_ASSEMBLY.out.versions)
@@ -79,10 +80,10 @@ workflow ASSEMBLE {
     //
     // SUBWORKFLOW: Synteny analysis
     //
-    SYNTENY (
-        ch_samplesheet,
-        ch_assembly_scaffold // path to genome scaffold
-    )
+    // SYNTENY (
+    //     ch_samplesheet,
+    //     ch_assembly_scaffold // path to genome scaffold
+    // )
     // ch_multiqc_files = ch_multiqc_files.mix(SYNTENY.out.zip.collect{it[1]})
     // ch_versions = ch_versions.mix(SYNTENY.out.versions.first())
 

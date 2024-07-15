@@ -8,7 +8,6 @@ workflow SYNTENY {
     ch_samplesheet
     ch_assembly_scaffold // channel: [ val(meta), path(scaffold_fasta) ]
    
-
     main:
 
     ch_ref = ch_samplesheet.map { meta, file, fasta -> [fasta] }

@@ -2,6 +2,7 @@ include { HIFIASM                        } from '../../modules/nf-core/hifiasm/m
 include { ASSEMBLY_STATS2 as TO_FASTA    } from '../../modules/local/assemblystats2'
 include { FCS_FCSADAPTOR                 } from '../../modules/nf-core/fcs/fcsadaptor/main'  
 include { RAGTAG                         } from '../../modules/local/ragtag'
+include { PREP_FASTAS                    } from '../../modules/local/prepfastas'
 
 workflow GENOME_ASSEMBLY {
 
@@ -29,10 +30,16 @@ workflow GENOME_ASSEMBLY {
     )
     ch_versions = ch_versions.mix(RAGTAG.out.versions.first())
 
+    PREP_FASTAS ( RAGTAG.out.fasta,
+                  ch_ref, 
+                  params.chr_names 
+    )
+    ch_versions = ch_versions.mix(PREP_FASTAS.out.versions.first())
 
     emit:
-    scaffold              = RAGTAG.out.fasta                           // channel: [ val(meta), path(fasta) ]
+    corrected_scaffold    = PREP_FASTAS.out.scaffold_modified          // channel: [ val(meta), path(fasta) ]
     assembly              = FCS_FCSADAPTOR.out.cleaned_assembly        // channel: [ val(meta), path(fa.gz) ]
+    corrected_ref         = PREP_FASTAS.out.ref_modified               // channel: [ val(meta), path(fasta))]
     versions              = ch_versions                                // channel: path(versions.yml)
 }
 
