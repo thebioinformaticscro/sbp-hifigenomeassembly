@@ -22,7 +22,7 @@ process ALIGN_FOR_SYNTENY {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    # sed 's/_RagTag//' $scaffold > ${prefix}_renamed.scaffold.fasta
+    sed 's/_RagTag//' $scaffold > ${prefix}_renamed.scaffold.fasta
     minimap2 \\
         $args \\
         -a \\
