@@ -11,7 +11,7 @@ process PREP_FASTAS {
 
     tuple val(meta), path(scaffold)
     path(ref)
-    path(chr_names)
+    file(chr_names)
 
     output:
     tuple val(meta), path("*.scaffolded.fasta"), emit: scaffold_modified
