@@ -8,6 +8,7 @@ include { HIFI_QC                } from '../subworkflows/local/hifi_qc'
 include { GENOME_ASSEMBLY        } from '../subworkflows/local/genome_assembly'
 include { ASSEMBLY_QC            } from '../subworkflows/local/assembly_qc'
 include { SYNTENY                } from '../subworkflows/local/synteny'
+include { SV                     } from '../subworkflows/local/sv'
 include { REPEATS                } from '../subworkflows/local/repeats'
 
 include { MULTIQC                } from '../modules/nf-core/multiqc/main'
