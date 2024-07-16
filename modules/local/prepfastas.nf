@@ -31,8 +31,10 @@ process PREP_FASTAS {
     sed 's/_RagTag//' $scaffold > ${prefix}_renamed.scaffold.fasta
     echo \$(cat ${prefix}_renamed.scaffold.fasta | grep ">chr")
     ref_name=\$(basename $ref .fasta)
+    cd data/
     chrs=\$(cat ${chr_names})
     echo \$chrs
+    cd ..
     for i in \$chrs; do
         echo \$i
         cat $ref | bioawk -c fastx -v chr="\$i" \'\$name==chr{print ">"\$name; print \$seq}\' >> \${ref_name}.ref.fasta
