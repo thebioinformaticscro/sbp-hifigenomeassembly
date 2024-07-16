@@ -12,7 +12,9 @@ workflow REPEATS {
 
     ch_versions = Channel.empty()
 
-    REPEAT_MASK ( ch_scaffold_fasta )
+    REPEAT_MASK ( ch_scaffold_fasta,
+                  params.species
+    )
     ch_versions = ch_versions.mix(REPEAT_MASK.out.versions.first())
 
     // FIND_REPEATS ( ch_scaffold_fasta )

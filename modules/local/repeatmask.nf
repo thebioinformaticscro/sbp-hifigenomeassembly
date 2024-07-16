@@ -9,6 +9,7 @@ process REPEAT_MASK {
 
     input:
     tuple val(meta), path(scaffold)
+    val(species)
 
     output:
     tuple val(meta), path("*.fa.masked"), emit: masked_fasta
@@ -23,7 +24,7 @@ process REPEAT_MASK {
     """
     RepeatMasker \\
     $args \\
-    -species metazoa \\
+    -species $species \\
     -s \\
     -parallel $task.cpus \\
     -xsmall \\
