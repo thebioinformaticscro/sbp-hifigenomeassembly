@@ -30,7 +30,7 @@ process ALIGN_FOR_SYNTENY {
         -t $task.cpus \\
         -o ${prefix}.syri.sam \\
         $ref \\
-        ${prefix}_renamed.scaffold.fasta
+        $scaffold
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
