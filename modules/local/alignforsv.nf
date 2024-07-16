@@ -27,7 +27,7 @@ process ALIGN_FOR_SV {
         -a \\
         -x asm5 \\
         --cs \\
-        -r2k \\
+        -L \\
         -t $task.cpus \\
         $ref \\
         $scaffold \\
