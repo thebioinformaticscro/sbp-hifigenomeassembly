@@ -12,7 +12,7 @@ process PREP_FASTAS {
 
     tuple val(meta), path(scaffold)
     path(ref)
-    file(chr_names)
+    path(chr_names)
 
     output:
     tuple val(meta), path("*.scaffolded.fasta"), emit: scaffold_modified
@@ -31,10 +31,8 @@ process PREP_FASTAS {
     sed 's/_RagTag//' $scaffold > ${prefix}_renamed.scaffold.fasta
     echo \$(cat ${prefix}_renamed.scaffold.fasta | grep ">chr")
     ref_name=\$(basename $ref .fasta)
-    cd data/
     chrs=\$(cat ${chr_names})
     echo \$chrs
-    cd ..
     for i in \$chrs; do
         echo \$i
         cat $ref | bioawk -c fastx -v chr="\$i" \'\$name==chr{print ">"\$name; print \$seq}\' >> \${ref_name}.ref.fasta
