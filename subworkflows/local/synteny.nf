@@ -7,19 +7,18 @@ workflow SYNTENY {
 
     ch_samplesheet
     ch_assembly_scaffold // channel: [ val(meta), path(scaffold_fasta) ]
-   
-    main:
+    ch_corrected_ref 
 
-    ch_ref = ch_samplesheet.map { meta, file, fasta -> [fasta] }
+    main:
     ch_versions = Channel.empty()
 
     ALIGN_FOR_SYNTENY ( ch_assembly_scaffold,
-                        ch_ref
+                        ch_corrected_ref
     )
     ch_versions = ch_versions.mix(ALIGN_FOR_SYNTENY.out.versions.first())
 
     SYRI ( ALIGN_FOR_SYNTENY.out.sam,
-           ch_ref,
+           ch_corrected_ref,
            ch_assembly_scaffold
      )
     ch_versions = ch_versions.mix(SYRI.out.versions.first())
