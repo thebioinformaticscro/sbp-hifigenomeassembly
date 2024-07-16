@@ -96,16 +96,16 @@ workflow ASSEMBLE {
         ch_assembly_scaffold, // path to genome scaffold
         ch_corrected_ref
     )
-    // ch_multiqc_files = ch_multiqc_files.mix(SV.out.zip.collect{it[1]})
-    // ch_versions = ch_versions.mix(SV.out.versions.first())
+    ch_multiqc_files = ch_multiqc_files.mix(SV.out.sv_calls.map {it[1]})
+    ch_multiqc_files = ch_multiqc_files.mix(SV.out.sv_plot.map {it[1]})
+    ch_versions = ch_versions.mix(SV.out.versions.first())
 
-    // //
-    // // SUBWORKFLOW: Repeat masking
-    // //
-    // REPEATS (
-    //     ch_scaffold_fasta // path to genome scaffold
-
-    // )
+    //
+    // SUBWORKFLOW: Repeat masking
+    //
+    REPEATS (
+        ch_assembly_scaffold // path to genome scaffold
+    )
     // ch_multiqc_files = ch_multiqc_files.mix(REPEATS.out.zip.collect{it[1]})
     // ch_versions = ch_versions.mix(REPEATS.out.versions.first())
 

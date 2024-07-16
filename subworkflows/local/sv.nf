@@ -22,11 +22,9 @@ workflow SV {
     )
     ch_versions = ch_versions.mix(CALL_SV.out.versions.first())
 
-    // emit:
-    // bam      = SAMTOOLS_SORT.out.bam           // channel: [ val(meta), [ bam ] ]
-    // bai      = SAMTOOLS_INDEX.out.bai          // channel: [ val(meta), [ bai ] ]
-    // csi      = SAMTOOLS_INDEX.out.csi          // channel: [ val(meta), [ csi ] ]
-
-    // versions = ch_versions                     // channel: [ versions.yml ]
+    emit:
+    sv_calls     = CALL_SV.out.vcf          // channel: [ val(meta), [ vcf ] ]
+    sv_plot      = CALL_SV.out.png          // channel: [ val(meta), [ png ] ]
+    versions     = ch_versions              // channel: [ versions.yml ]
 }
 
