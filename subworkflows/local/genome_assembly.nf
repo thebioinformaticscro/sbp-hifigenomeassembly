@@ -14,7 +14,6 @@ workflow GENOME_ASSEMBLY {
 
     ch_fastq = ch_samplesheet.map { meta, file, fasta -> [meta, file] }
     ch_ref = ch_samplesheet.map { meta, file, fasta -> [fasta] }
-    ch_ref.view()
     ch_chr_names = params.chr_names
     ch_versions = Channel.empty()
 
