@@ -12,7 +12,7 @@ workflow SV {
 
     ch_versions = Channel.empty()
 
-    ALIGN_FOR_SV ( ch_scaffold_fasta,
+    ALIGN_FOR_SV ( ch_assembly_scaffold,
                    ch_corrected_ref            // channel: [ path(ref_fasta) ]
     )
     ch_versions = ch_versions.mix(ALIGN_FOR_SV.out.versions.first())
