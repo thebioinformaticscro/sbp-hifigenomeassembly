@@ -17,10 +17,10 @@ workflow SV {
     )
     ch_versions = ch_versions.mix(ALIGN_FOR_SV.out.versions.first())
 
-    // CALL_SV ( ALIGN_FOR_SV.out.bam,
-    //           ch_ref 
-    // )
-    // ch_versions = ch_versions.mix(CALL_SV.out.versions.first())
+    CALL_SV ( ALIGN_FOR_SV.out.bam,
+              ch_corrected_ref 
+    )
+    ch_versions = ch_versions.mix(CALL_SV.out.versions.first())
 
     // emit:
     // bam      = SAMTOOLS_SORT.out.bam           // channel: [ val(meta), [ bam ] ]
