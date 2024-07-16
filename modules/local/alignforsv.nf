@@ -25,20 +25,20 @@ process ALIGN_FOR_SV {
     minimap2 \\
         $args \\
         -a \\
-        -x asm5 \\
-        --cs \\
-        -L \\
+        -x asm20 \\
         -t $task.cpus \\
+        -o wga.sam \\
         $ref \\
-        $scaffold \\
-    | \\
+        $scaffold
+
     samtools \\
         sort \\
         $args \\
         -m4G \\
         -@ $task.cpus \\
         -O BAM \\
-        -o ${prefix}_sv_alignment.bam
+        -o ${prefix}_sv_alignment.bam \\
+        wga.sam
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
