@@ -7,7 +7,7 @@ workflow SYNTENY {
 
     ch_samplesheet
     ch_assembly_scaffold // channel: [ val(meta), path(scaffold_fasta) ]
-    ch_corrected_ref 
+    ch_corrected_ref     // channel: [ path(fasta) ]
 
     main:
     ch_versions = Channel.empty()
@@ -23,12 +23,8 @@ workflow SYNTENY {
      )
     ch_versions = ch_versions.mix(SYRI.out.versions.first())
 
-    // emit:
-    // // TODO nf-core: edit emitted channels
-    // bam      = SAMTOOLS_SORT.out.bam           // channel: [ val(meta), [ bam ] ]
-    // bai      = SAMTOOLS_INDEX.out.bai          // channel: [ val(meta), [ bai ] ]
-    // csi      = SAMTOOLS_INDEX.out.csi          // channel: [ val(meta), [ csi ] ]
-
-    // versions = ch_versions                     // channel: [ versions.yml ]
+    emit:
+    synteny_plot      = SYRI.out.png           // channel: [ val(meta), path(png) ]
+    versions          = ch_versions            // channel: [ versions.yml ]
 }
 

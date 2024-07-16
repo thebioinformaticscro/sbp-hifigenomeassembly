@@ -2,7 +2,7 @@ process SYRI {
     tag "$meta.id"
     label 'process_high'
 
-    conda "${moduleDir}/environment.yml"
+    conda "bioconda::plotsr=1.1.1 bioconda::syri=1.6.3"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'oras://community.wave.seqera.io/library/plotsr_syri:5cffccf51a051df6' :
         'community.wave.seqera.io/library/plotsr_syri:5cffccf51a051df6' }"
