@@ -14,6 +14,7 @@ process FINAL_MASK {
     output:
     tuple val(meta), path("*.masked.masked"), emit: masked_fasta
     tuple val(meta), path("*.tbl")          , emit: tbl
+    tuple val(meta), path("*.out")          , emit: repeat_list
     path "versions.yml"                     , emit: versions
 
     when:
