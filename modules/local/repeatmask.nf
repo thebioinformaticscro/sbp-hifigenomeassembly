@@ -13,8 +13,10 @@ process REPEAT_MASK {
     val(species)
 
     output:
-    tuple val(meta), path("*.fa.masked"), emit: masked_fasta
-    path "versions.yml"                 , emit: versions
+    tuple val(meta), path("*.fasta.masked"), emit: masked_fasta
+    tuple val(meta), path("*.fasta.out")   , emit: repeat_list
+    tuple val(meta), path("*.fasta.tbl")   , emit: repeat_tbl
+    path "versions.yml"                    , emit: versions
 
     when:
     task.ext.when == null || task.ext.when

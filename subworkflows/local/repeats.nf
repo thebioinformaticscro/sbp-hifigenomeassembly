@@ -17,20 +17,17 @@ workflow REPEATS {
     )
     ch_versions = ch_versions.mix(REPEAT_MASK.out.versions.first())
 
-    // FIND_REPEATS ( ch_scaffold_fasta )
-    // ch_versions = ch_versions.mix(FIND_REPEATS.out.versions.first())
+    FIND_REPEATS ( ch_scaffold_fasta )
+    ch_versions = ch_versions.mix(FIND_REPEATS.out.versions.first())
 
-    // FINAL_MASK ( REPEAT_MASK.out.masked,
-    //              FIND_REPEATS.out.fasta
-    // )
-    // ch_versions = ch_versions.mix(FINAL_MASK.out.versions.first())
+    FINAL_MASK ( REPEAT_MASK.out.maskedmasked_fasta,
+                 FIND_REPEATS.out.fa
+    )
+    ch_versions = ch_versions.mix(FINAL_MASK.out.versions.first())
 
-    // emit:
-    // // TODO nf-core: edit emitted channels
-    // bam      = SAMTOOLS_SORT.out.bam           // channel: [ val(meta), [ bam ] ]
-    // bai      = SAMTOOLS_INDEX.out.bai          // channel: [ val(meta), [ bai ] ]
-    // csi      = SAMTOOLS_INDEX.out.csi          // channel: [ val(meta), [ csi ] ]
-
-    // versions = ch_versions                     // channel: [ versions.yml ]
+    emit:
+    masked_fasta      = FINAL_MASK.out.masked_fasta     // channel: [ val(meta), [ masked ] ]
+    repeat_tbl        = FINAL_MASK.out.tbl              // channel: [ val(meta), [ tbl ] ]
+    versions          = ch_versions                     // channel: [ versions.yml ]
 }
 
