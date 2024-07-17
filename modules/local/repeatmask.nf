@@ -2,10 +2,10 @@ process REPEAT_MASK {
     tag "$meta.id"
     label 'process_high'
 
-    conda "bioconda::minimap2=2.28 bioconda::samtools=1.20"
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'oras://docker.io/library/tetools:1.88.5' :
-        'docker.io/library/tetools:1.88.5' }"
+    // conda "bioconda::minimap2=2.28 bioconda::samtools=1.20"
+    // container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+    //     'oras://docker.io/library/dfam/tetools:1.88.5' :
+    //     'docker.io/library/dfam/tetools:1.88.5' }"
 
 
     input:
