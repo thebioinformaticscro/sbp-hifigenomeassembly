@@ -88,6 +88,19 @@
                 }
             }
         },
+        "repeat_mask_options": {
+            "title": "REPEAT_MASK options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "species": {
+                    "type": "string",
+                    "help_text": "This parameter is a user supplied taxon id used to run repeatmasker",
+                    "description": "The taxon id to use"
+                }
+            }
+        },
         "institutional_config_options": {
             "title": "Institutional config options",
             "type": "object",
