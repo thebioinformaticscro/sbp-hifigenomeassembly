@@ -25,7 +25,7 @@ process REPEAT_MASK {
     """
     RepeatMasker \\
     $args \\
-    -species $species \\
+    -species "${species}" \\
     -s \\
     -parallel $task.cpus \\
     -xsmall \\
