@@ -71,11 +71,16 @@ workflow ASSEMBLE {
     //SUBWORKFLOW: QC the genome assembly (contigs and scaffolded assembly)
     //
     ASSEMBLY_QC (
-        ch_assembly_fasta              // path to genome assembly 
+        ch_assembly_fasta,              // path to genome assembly 
+        ch_corrected_ref,
+        ch_samplesheet
     )
     
     ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.cov_plot.map {it[1]})
     ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.busco_plot.map {it[1]})
+    ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.quast_plots.map {it[1]})
+    ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.kat_plot.map {it[1]})
+
     ch_versions = ch_versions.mix(ASSEMBLY_QC.out.versions.first())
 
     //

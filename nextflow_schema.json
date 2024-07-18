@@ -75,6 +75,19 @@
             },
             "fa_icon": "fas fa-chart-pie"
         },
+        "quast_options": {
+            "title": "QUAST options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "ref_gff": {
+                    "type": "string",
+                    "help_text": "This parameter is a user supplied gff/gff3 file of genes present in a reference genome",
+                    "description": "Gene annotation file"
+                }
+            }
+        },
         "prep_fasta_options": {
             "title": "PREP_FASTA options",
             "type": "object",
