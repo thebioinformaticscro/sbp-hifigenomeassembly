@@ -25,7 +25,6 @@ process RAGTAG {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    zcat $assembly > ${meta.id}.assembly.fasta
     ragtag.py \\
         scaffold \\
         $args \\
@@ -33,7 +32,7 @@ process RAGTAG {
         -o ${meta.id}_ragtag_output \\
         -u \\
         $ref \\
-        ${meta.id}.assembly.fasta
+        $assembly
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

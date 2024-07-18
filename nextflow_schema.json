@@ -46,6 +46,24 @@
                 }
             }
         },
+        "fcsgx_options": {
+            "title": "FCSGX options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "gxdb": {
+                    "type": "string",
+                    "help_text": "This parameter is a user supplied gxdb database file for finding cross-species contamination ",
+                    "description": "gxdb database"
+                },
+                "tax_id": {
+                    "type": "integer",
+                    "help_text": "This parameter is a user supplied taxonomy ID of the species of the sample being assembled",
+                    "description": "taxonomy ID"
+                }
+            }
+        },
         "busco_options": {
             "title": "BUSCO options",
             "type": "object",

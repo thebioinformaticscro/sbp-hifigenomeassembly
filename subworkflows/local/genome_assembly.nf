@@ -1,6 +1,7 @@
 include { HIFIASM                        } from '../../modules/nf-core/hifiasm/main'
 include { ASSEMBLY_STATS2 as TO_FASTA    } from '../../modules/local/assemblystats2'
-include { FCS_FCSADAPTOR                 } from '../../modules/nf-core/fcs/fcsadaptor/main'  
+include { FCS_FCSADAPTOR                 } from '../../modules/nf-core/fcs/fcsadaptor/main'
+include { FCSGX                          } from '../../modules/local/fcsgx'
 include { RAGTAG                         } from '../../modules/local/ragtag'
 include { PREP_FASTAS                    } from '../../modules/local/prepfastas'
 
@@ -26,7 +27,12 @@ workflow GENOME_ASSEMBLY {
     FCS_FCSADAPTOR ( TO_FASTA.out.fasta )
     ch_versions = ch_versions.mix(FCS_FCSADAPTOR.out.versions.first())
 
-    RAGTAG ( FCS_FCSADAPTOR.out.cleaned_assembly,
+    FCSGX ( FCS_FCSADAPTOR.out.cleaned_assembly,
+            params.gxdb,
+            params.tax_id
+    )
+
+    RAGTAG ( FCSGX.out.cleaned_assembly,
              ch_ref 
     )
     ch_versions = ch_versions.mix(RAGTAG.out.versions.first())
@@ -39,7 +45,7 @@ workflow GENOME_ASSEMBLY {
 
     emit:
     corrected_scaffold    = PREP_FASTAS.out.scaffold_modified          // channel: [ val(meta), path(fasta) ]
-    assembly              = FCS_FCSADAPTOR.out.cleaned_assembly        // channel: [ val(meta), path(fa.gz) ]
+    assembly              = FCSGX.out.cleaned_assembly                 // channel: [ val(meta), path(fa.gz) ]
     corrected_ref         = PREP_FASTAS.out.ref_modified               // channel: [ val(meta), path(fasta))]
     versions              = ch_versions                                // channel: path(versions.yml)
 }
