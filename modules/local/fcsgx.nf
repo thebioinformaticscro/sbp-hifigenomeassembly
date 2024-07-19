@@ -33,8 +33,10 @@ process FCSGX {
         --tax-id $tax_id \\
         $args
 
+    name=\$(basename $assembly .fa.gz)
+    zcat $assembly > \$name.fasta
     /app/bin/gx clean-genome \\
-        -i $assembly \\
+        -i \$name.fasta \\
         --action-report ./${prefix}_gx_out/*.fcs_gx_report.txt \\
         --contam-fasta-out ${prefix}.contam.fasta \\
         --output ${prefix}.cleaned.fasta \\
