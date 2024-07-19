@@ -33,6 +33,13 @@ process FCSGX {
         --tax-id $tax_id \\
         $args
 
+    /app/bin/gx clean-genome \\
+        -i $assembly \\
+        --action-report ./${prefix}_gx_out/*.fcs_gx_report.txt \\
+        --contam-fasta-out ${prefix}.contam.fasta \\
+        --output ${prefix}.cleaned.fasta \\
+        $args
+
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         fcsgx: $VERSION
