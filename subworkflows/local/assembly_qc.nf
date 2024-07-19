@@ -58,7 +58,7 @@ workflow ASSEMBLY_QC {
         ch_assembly_fasta,
         ch_fastq
     )
-    ch_versions = ch_versions.mix(KAT.out.versions.first())
+    ch_versions = ch_versions.mix(KAT_HIST.out.versions.first())
 
     emit:
     kat_plots               = KAT_HIST.out.png              // channel: [ val(meta), path(png) ]
