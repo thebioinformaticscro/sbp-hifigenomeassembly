@@ -26,7 +26,7 @@ process FCSGX {
     def prefix = task.ext.prefix ?: "${meta.id}"
     def VERSION = '0.5.4' // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
     """
-    python3 /app/bin/run_gx screen-genome \\
+    python3 /app/bin/run_gx \\
         --fasta $assembly \\
         --out-dir ./${prefix}_gx_out \\
         --gx-db $gxdb \\
