@@ -26,16 +26,14 @@ process FCSGX {
     def prefix = task.ext.prefix ?: "${meta.id}"
     def VERSION = '0.5.4' // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
     """
-    python3 /app/bin/run_gx \\
-        screen \\
+    python3 /app/bin/run_gx screen-genome \\
         --fasta $assembly \\
         --out-dir ./${prefix}_gx_out \\
         --gx-db $gxdb \\
         --tax-id $tax_id \\
         $args
 
-    /app/bin/gx \\
-        clean \\
+    /app/bin/gx clean-genome \\
         -i $assembly \\
         --action-report ./${prefix}_gx_out/*.fcs_gx_report.txt \\
         --contam-fasta-out ${prefix}.contam.fasta \\
