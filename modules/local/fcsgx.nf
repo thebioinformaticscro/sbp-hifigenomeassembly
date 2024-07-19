@@ -13,10 +13,10 @@ process FCSGX {
     val(tax_id)
 
     output:
-    tuple val(meta), path("*.cleaned.fasta")      , emit: cleaned_assembly
-    tuple val(meta), path("*.contam.fasta")       , emit: contam_fasta
-    tuple val(meta), path("*.fcs_gx_report.txt")  , emit: contam_report
-    path "versions.yml"                           , emit: versions
+    tuple val(meta), path("*.cleaned.fasta")                        , emit: cleaned_assembly
+    tuple val(meta), path("*.contam.fasta")                         , emit: contam_fasta
+    tuple val(meta), path("${prefix}_gx_out/*.fcs_gx_report.txt")  , emit: contam_report
+    path "versions.yml"                                             , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
