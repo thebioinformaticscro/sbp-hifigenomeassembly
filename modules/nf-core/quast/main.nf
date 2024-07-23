@@ -6,6 +6,7 @@ process QUAST {
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'https://depot.galaxyproject.org/singularity/quast:5.2.0--py39pl5321h2add14b_1' :
         'biocontainers/quast:5.2.0--py39pl5321h2add14b_1' }"
+    containerOptions = "--user root"
 
     input:
     tuple val(meta) , path(consensus)
@@ -29,7 +30,7 @@ process QUAST {
     def features  = gff             ?  "--features $gff" : ''
     def reference = ref           ?  "-r $ref"       : ''
     """
-    sudo chmod 775 /usr/local/lib/python3.9/site-packages/quast_libs/
+    chmod 775 /usr/local/lib/python3.9/site-packages/quast_libs/
     quast.py \\
         --output-dir $prefix \\
         $reference \\
