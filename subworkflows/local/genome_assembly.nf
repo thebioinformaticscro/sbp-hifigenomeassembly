@@ -31,10 +31,9 @@ workflow GENOME_ASSEMBLY {
                                         }
     // trying to make a new meta map (https://training.nextflow.io/advanced/metadata/#first-pass)
     ch_haps = ch_hap1.mix(ch_hap2)
-    ch_haps.view()
-    HIFIASM.out.processed_contigs.view()
 
-    TO_FASTA ( HIFIASM.out.processed_contigs )
+    TO_FASTA ( ch_haps )
+    TO_FASTA.out.view()
     ch_versions = ch_versions.mix(TO_FASTA.out.versions.first())
 
     FCS_FCSADAPTOR ( TO_FASTA.out.fasta )
