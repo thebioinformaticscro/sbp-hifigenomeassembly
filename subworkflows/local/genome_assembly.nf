@@ -33,7 +33,7 @@ workflow GENOME_ASSEMBLY {
     ch_haps = ch_hap1.mix(ch_hap2)
 
     TO_FASTA ( ch_haps )
-    TO_FASTA.out.view()
+    TO_FASTA.out.fasta.view()
     ch_versions = ch_versions.mix(TO_FASTA.out.versions.first())
 
     FCS_FCSADAPTOR ( TO_FASTA.out.fasta )
