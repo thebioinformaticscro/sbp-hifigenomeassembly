@@ -21,6 +21,8 @@ workflow GENOME_ASSEMBLY {
     HIFIASM ( ch_fastq )
     ch_versions = ch_versions.mix(HIFIASM.out.versions.first())
 
+    ch_hap_primary = HIFIASM.out.processed_contigs
+    
     ch_hap1 = HIFIASM.out.haplotype1.map { meta, path ->  
                                         meta = meta + [type:'hap1']
                                         [meta, path]
@@ -30,10 +32,16 @@ workflow GENOME_ASSEMBLY {
                                         [meta, path]
                                         }
     // trying to make a new meta map (https://training.nextflow.io/advanced/metadata/#first-pass)
-    ch_haps = ch_hap1.mix(ch_hap2)
+    ch_both_haps = ch_hap1.mix(ch_hap2)
+
+    if (params.primary_only) {
+        ch_haps = HIFIASM.out.processed_contigs
+    } else {
+        ch_haps = ch_both_haps
+    }
 
     TO_FASTA ( ch_haps )
-    TO_FASTA.out.fasta.view()
+
     ch_versions = ch_versions.mix(TO_FASTA.out.versions.first())
 
     FCS_FCSADAPTOR ( TO_FASTA.out.fasta )

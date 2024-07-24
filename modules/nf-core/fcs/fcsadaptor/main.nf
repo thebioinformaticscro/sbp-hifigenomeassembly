@@ -27,7 +27,7 @@ process FCS_FCSADAPTOR {
         error "FCS_FCSADAPTOR module does not support Conda. Please use Docker / Singularity / Podman instead."
     }
     def args = task.ext.args ?: '--euk' // --prok || --euk
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    def prefix = task.ext.prefix ?: "${meta.id}.${meta.type}"
     def FCSADAPTOR_VERSION = '0.5.0' // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
     """
     av_screen_x \\
