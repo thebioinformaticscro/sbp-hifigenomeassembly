@@ -21,7 +21,7 @@ process KAT_HIST {
 
     script:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}_kat"
+    def prefix = task.ext.prefix ?: "${meta.id}.${meta.type}_kat"
     """
     kat comp \\
         --threads $task.cpus \\

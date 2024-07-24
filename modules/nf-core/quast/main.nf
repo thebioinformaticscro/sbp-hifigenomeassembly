@@ -26,7 +26,7 @@ process QUAST {
 
     script:
     def args      = task.ext.args   ?: ''
-    prefix        = task.ext.prefix ?: "${meta.id}_quast"
+    prefix        = task.ext.prefix ?: "${meta.id}.${meta.type}_quast"
     def features  = gff             ?  "--features $gff" : ''
     def reference = ref           ?  "-r $ref"       : ''
     """

@@ -23,7 +23,7 @@ process REPEAT_MASK {
 
     script:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    def prefix = task.ext.prefix ?: "${meta.id}.${meta.type}"
     """
     RepeatMasker \\
     $args \\

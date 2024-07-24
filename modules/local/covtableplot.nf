@@ -20,13 +20,13 @@ process COV_TABLE_PLOT {
 
     script:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    def prefix = task.ext.prefix ?: "${meta.id}.${meta.type}"
     def VERSION = '1.0.0' // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
     """
     assembly_size=\$(cat $assembly_size)
-    cat $cov_table | sort -k3rV -t "," | awk -F "," -v len=\$assembly_size -v type=contig 'OFS=","{ print \$1,\$2,type,(sum+0)/len; sum+=\$3 }' > ${meta.id}_contig_lengths_table.csv
+    cat $cov_table | sort -k3rV -t "," | awk -F "," -v len=\$assembly_size -v type=contig 'OFS=","{ print \$1,\$2,type,(sum+0)/len; sum+=\$3 }' > ${prefix}_contig_lengths_table.csv
 
-    plot_contig_length_distribution.R "${meta.id}_contig_lengths_table.csv" ${meta.id}
+    plot_contig_length_distribution.R "${prefix}_contig_lengths_table.csv" ${prefix}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

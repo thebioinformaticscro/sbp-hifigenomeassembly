@@ -29,7 +29,7 @@ process RAGTAG {
         scaffold \\
         $args \\
         -t $task.cpus \\
-        -o ${meta.id}_${meta.type}_ragtag_output \\
+        -o ${meta.id}.${meta.type}_ragtag_output \\
         -u \\
         $ref \\
         $assembly

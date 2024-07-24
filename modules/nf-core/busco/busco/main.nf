@@ -34,7 +34,7 @@ process BUSCO_BUSCO {
         error "Mode must be one of 'genome', 'proteins', or 'transcriptome'."
     }
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}-${lineage}"
+    def prefix = task.ext.prefix ?: "${meta.id}.${meta.type}-${lineage}"
     def busco_config = config_file ? "--config $config_file" : ''
     def busco_lineage = lineage.equals('auto') ? '--auto-lineage' : "--lineage_dataset ${lineage}"
     def busco_lineage_dir = busco_lineages_path ? "--download_path ${busco_lineages_path}" : ''

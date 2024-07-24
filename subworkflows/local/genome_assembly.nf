@@ -42,7 +42,7 @@ workflow GENOME_ASSEMBLY {
     } else {
         ch_haps = ch_both_haps
     }
-    ch_haps.view()
+
     TO_FASTA ( ch_haps )
 
     ch_versions = ch_versions.mix(TO_FASTA.out.versions.first())

@@ -20,7 +20,7 @@ process ALIGN_FOR_SYNTENY {
 
     script:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    def prefix = task.ext.prefix ?: "${meta.id}.${meta.type}"
     """
     minimap2 \\
         $args \\

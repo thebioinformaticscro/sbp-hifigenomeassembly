@@ -23,7 +23,7 @@ process CALL_SV {
 
     script:
     def args = task.ext.args ?: ''
-    def prefix = task.ext.prefix ?: "${meta.id}"
+    def prefix = task.ext.prefix ?: "${meta.id}.${meta.type}"
     """
     samtools \\
         index \\
@@ -31,7 +31,7 @@ process CALL_SV {
     svim-asm \\
         $args \\
         haploid \\
-        ${meta.id}_svim_output \\
+        ${prefix}_svim_output \\
         $bam \\
         $ref 
 
