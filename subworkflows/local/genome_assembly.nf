@@ -21,7 +21,10 @@ workflow GENOME_ASSEMBLY {
     HIFIASM ( ch_fastq )
     ch_versions = ch_versions.mix(HIFIASM.out.versions.first())
 
-    ch_hap_primary = HIFIASM.out.processed_contigs
+    ch_hap_primary = HIFIASM.out.processed_contigs.map { meta, path ->  
+                                        meta = meta + [type:'primary']
+                                        [meta, path]
+                                        }
     
     ch_hap1 = HIFIASM.out.haplotype1.map { meta, path ->  
                                         meta = meta + [type:'hap1']
@@ -35,7 +38,7 @@ workflow GENOME_ASSEMBLY {
     ch_both_haps = ch_hap1.mix(ch_hap2)
 
     if (params.primary_only) {
-        ch_haps = HIFIASM.out.processed_contigs
+        ch_haps = ch_hap_primary
     } else {
         ch_haps = ch_both_haps
     }
