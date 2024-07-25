@@ -61,9 +61,10 @@ workflow GENOME_ASSEMBLY {
     ch_versions = ch_versions.mix(RAGTAG.out.versions.first())
 
     ch_ragtag_ref = RAGTAG.out.fasta.combine(ch_ref)
-    ch_ragtag_ref_names = ch_ragtag_ref.combine(ch_chr_names)
 
-    PREP_FASTAS ( ch_ragtag_ref_names )
+    PREP_FASTAS ( ch_ragtag_ref,
+                  ch_chr_names 
+    )
     ch_versions = ch_versions.mix(PREP_FASTAS.out.versions.first())
 
     emit:
