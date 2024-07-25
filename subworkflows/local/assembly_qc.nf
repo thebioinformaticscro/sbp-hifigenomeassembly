@@ -47,18 +47,17 @@ workflow ASSEMBLY_QC {
     BUSCO_GENERATEPLOT ( BUSCO_BUSCO.out.short_summaries_txt )
     ch_versions = ch_versions.mix(BUSCO_GENERATEPLOT.out.versions.first())
 
-    // for quast, just download newer image from wave, create own custom module 
+    ch_assembly_ref = ch_assembly_fasta.combine(ch_corrected_ref)
+
     QUAST (
-        ch_assembly_fasta,
-        ch_corrected_ref,
+        ch_assembly_ref,
         params.ref_gff
     )
     ch_versions = ch_versions.mix(QUAST.out.versions.first())
 
-    KAT_HIST (
-        ch_assembly_fasta,
-        ch_fastq
-    )
+    ch_assembly_fastq = ch_assembly_fasta.combine(ch_fastq, by:0)
+    
+    KAT_HIST ( ch_assembly_fastq )
     ch_versions = ch_versions.mix(KAT_HIST.out.versions.first())
 
     emit:

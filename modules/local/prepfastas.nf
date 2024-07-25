@@ -10,14 +10,11 @@ process PREP_FASTAS {
 
     input:
 
-    tuple val(meta), path(scaffold)
-    path(ref)
-    path(chr_names)
+    tuple val(meta), path(scaffold), path(ref), path(chr_names)
 
     output:
     tuple val(meta), path("*.scaffolded.fasta"), emit: scaffold_modified
     path("*.ref.fasta")                        , emit: ref_modified
-
     path "versions.yml"                        , emit: versions
 
     when:

@@ -8,8 +8,7 @@ process KAT_HIST {
         'biocontainers/kat:2.4.2--py38hfc5f9d8_2' }"
 
     input:
-    tuple val(meta), path(assembly)
-    tuple val(meta), path(reads)
+    tuple val(meta), path(assembly), path(reads)
 
     output:
     tuple val(meta), path("*.png")                    , emit: png          
