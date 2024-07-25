@@ -8,8 +8,7 @@ process RAGTAG {
         'community.wave.seqera.io/library/ragtag:2.1.0--0ad61b661719a8ae' }"
 
     input:
-    tuple val(meta), path(assembly)
-    path(ref)
+    tuple val(meta), path(assembly), path(ref)
 
     output:
     tuple val(meta), path("*_ragtag_output/ragtag.scaffold.stats")    , emit: stats 

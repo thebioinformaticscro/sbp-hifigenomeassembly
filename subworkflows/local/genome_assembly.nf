@@ -55,9 +55,10 @@ workflow GENOME_ASSEMBLY {
             params.tax_id
     )
 
-    RAGTAG ( FCSGX.out.cleaned_assembly,
-             ch_ref 
-    )
+    ch_assembly_ref = FCSGX.out.cleaned_assembly.combine(ch_ref)
+    ch_assembly_ref.view()
+
+    RAGTAG ( ch_assembly_ref  )
     ch_versions = ch_versions.mix(RAGTAG.out.versions.first())
 
     PREP_FASTAS ( RAGTAG.out.fasta,
