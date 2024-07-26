@@ -1,5 +1,5 @@
 process FIND_REPEATS {
-    tag "$meta.id"
+    tag "${meta.id}.${meta.type}"
     label 'process_high'
 
     conda "${moduleDir}/environment.yml"

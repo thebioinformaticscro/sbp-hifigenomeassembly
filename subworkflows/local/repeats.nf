@@ -20,9 +20,9 @@ workflow REPEATS {
     FIND_REPEATS ( ch_scaffold_fasta )
     ch_versions = ch_versions.mix(FIND_REPEATS.out.versions.first())
 
-    FINAL_MASK ( REPEAT_MASK.out.masked_fasta,
-                 FIND_REPEATS.out.fa
-    )
+    ch_masks = REPEAT_MASK.out.masked_fasta.combine(FIND_REPEATS.out.fa, by:0)
+
+    FINAL_MASK ( ch_masks )
     ch_versions = ch_versions.mix(FINAL_MASK.out.versions.first())
 
     emit:

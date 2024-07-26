@@ -1,5 +1,5 @@
 process FINAL_MASK {
-    tag "$meta.id"
+    tag "${meta.id}.${meta.type}"
     label 'process_high'
 
     conda "${moduleDir}/environment.yml"
@@ -8,8 +8,7 @@ process FINAL_MASK {
         'docker.io/dfam/tetools:1.88.5' }"
 
     input:
-    tuple val(meta), path(masked)
-    tuple val(meta), path(fa)
+    tuple val(meta), path(masked), path(fa)
 
     output:
     tuple val(meta), path("*.masked.masked"), emit: masked_fasta

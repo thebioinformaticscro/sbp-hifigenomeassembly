@@ -1,5 +1,5 @@
 process REPEAT_MASK {
-    tag "$meta.id"
+    tag "${meta.id}.${meta.type}"
     label 'process_high'
 
     conda "bioconda::minimap2=2.28 bioconda::samtools=1.20"
