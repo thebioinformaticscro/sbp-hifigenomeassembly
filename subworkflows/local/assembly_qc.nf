@@ -21,6 +21,7 @@ workflow ASSEMBLY_QC {
     ch_optional_input = Channel.of("/")
     ch_fasta_empty = ch_assembly_fasta.combine(ch_optional_input)
     ch_fastq = ch_samplesheet.map { meta, file, fasta -> [meta, file] }
+    ch_fastq.view()
 
     ASSEMBLY_SIZE ( ch_fasta_empty )
     ch_versions = ch_versions.mix(ASSEMBLY_SIZE.out.versions.first())
@@ -47,7 +48,8 @@ workflow ASSEMBLY_QC {
     BUSCO_GENERATEPLOT ( BUSCO_BUSCO.out.short_summaries_txt )
     ch_versions = ch_versions.mix(BUSCO_GENERATEPLOT.out.versions.first())
 
-    ch_assembly_ref = ch_assembly_fasta.combine(ch_corrected_ref)
+    ch_assembly_ref = ch_assembly_fasta.combine(ch_corrected_ref, by:0)
+    //ch_assembly_ref.view()
 
     QUAST (
         ch_assembly_ref,
@@ -55,8 +57,8 @@ workflow ASSEMBLY_QC {
     )
     ch_versions = ch_versions.mix(QUAST.out.versions.first())
 
-    ch_assembly_fastq = ch_assembly_fasta.combine(ch_fastq, by:0)
-    //ch_assembly_fastq.view()
+    ch_assembly_fastq = ch_assembly_fasta.combine( ch_fastq, by: { it[0].id } )
+    ch_assembly_fastq.view()
     KAT_HIST ( ch_assembly_fastq )
     ch_versions = ch_versions.mix(KAT_HIST.out.versions.first())
 
