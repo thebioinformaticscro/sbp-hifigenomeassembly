@@ -97,13 +97,13 @@ workflow ASSEMBLE {
     // //
     // // SUBWORKFLOW: SV analysis
     // //
-    // SV (
-    //     ch_assembly_scaffold, // path to genome scaffold
-    //     ch_corrected_ref
-    // )
-    // ch_multiqc_files = ch_multiqc_files.mix(SV.out.sv_calls.map {it[1]})
-    // ch_multiqc_files = ch_multiqc_files.mix(SV.out.sv_plot.map {it[1]})
-    // ch_versions = ch_versions.mix(SV.out.versions.first())
+    SV (
+        ch_assembly_scaffold, // path to genome scaffold
+        ch_corrected_ref
+    )
+    ch_multiqc_files = ch_multiqc_files.mix(SV.out.sv_calls.map {it[1]})
+    ch_multiqc_files = ch_multiqc_files.mix(SV.out.sv_plot.map {it[1]})
+    ch_versions = ch_versions.mix(SV.out.versions.first())
 
     //
     // SUBWORKFLOW: Repeat masking
