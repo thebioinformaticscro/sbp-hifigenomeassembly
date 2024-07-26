@@ -17,7 +17,7 @@ workflow SYNTENY {
     ch_versions = ch_versions.mix(ALIGN_FOR_SYNTENY.out.versions.first())
 
     ch_synteny_scaffold = ALIGN_FOR_SYNTENY.out.sam.combine(ch_assembly_scaffold, by:0)
-    //ch_synteny_scaffold.view()
+    ch_synteny_scaffold.view()
     ch_synteny_scaffold_ref = ch_synteny_scaffold.combine(ch_corrected_ref)
     //ch_synteny_scaffold_ref.view()
 
