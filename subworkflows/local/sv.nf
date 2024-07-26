@@ -11,15 +11,13 @@ workflow SV {
     main:
 
     ch_versions = Channel.empty()
+    ch_scaffold_ref = ch_assembly_scaffold.combine(ch_corrected_ref)
 
-    ALIGN_FOR_SV ( ch_assembly_scaffold,
-                   ch_corrected_ref            // channel: [ path(ref_fasta) ]
-    )
+    ALIGN_FOR_SV ( ch_scaffold_ref )          // channel: [ path(ref_fasta) ]
     ch_versions = ch_versions.mix(ALIGN_FOR_SV.out.versions.first())
 
-    CALL_SV ( ALIGN_FOR_SV.out.bam,
-              ch_corrected_ref 
-    )
+    ch_sv_bam_ref = ALIGN_FOR_SV.out.bam.combine(ch_corrected_ref)
+    CALL_SV ( ch_sv_bam_ref )
     ch_versions = ch_versions.mix(CALL_SV.out.versions.first())
 
     emit:

@@ -1,5 +1,5 @@
 process CALL_SV {
-    tag "$meta.id"
+    tag "${meta.id}.${meta.type}"
     label 'process_high'
 
     conda "bioconda::samtools=1.20 bioconda::svim-asm=1.0.3"
@@ -8,8 +8,7 @@ process CALL_SV {
         'community.wave.seqera.io/library/samtools_svim-asm:a44fd8f7773aae2f' }"
 
     input:
-    tuple val(meta), path(bam)
-    path(ref)
+    tuple val(meta), path(bam), path(ref)
 
 
     output:

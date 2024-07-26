@@ -1,5 +1,5 @@
 process ALIGN_FOR_SV {
-    tag "$meta.id"
+    tag "${meta.id}.${meta.type}"
     label 'process_high'
 
     conda "bioconda::minimap2=2.28 bioconda::samtools=1.20"
@@ -8,8 +8,7 @@ process ALIGN_FOR_SV {
         'community.wave.seqera.io/library/minimap2_samtools:7e38c0cfb1291cfb' }"
 
     input:
-    tuple val(meta), path(scaffold)
-    path(ref)
+    tuple val(meta), path(scaffold), path(ref)
 
     output:
     tuple val(meta), path("*.bam"), emit: bam

@@ -1,5 +1,5 @@
 process PREP_FASTAS {
-    tag "$meta.id"
+    tag "${meta.id}.${meta.type}"
     label 'process_low'
     debug true
 

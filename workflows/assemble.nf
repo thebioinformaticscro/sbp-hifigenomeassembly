@@ -108,12 +108,12 @@ workflow ASSEMBLE {
     //
     // SUBWORKFLOW: Repeat masking
     //
-    REPEATS (
-        ch_assembly_scaffold // path to genome scaffold
-    )
-    ch_multiqc_files = ch_multiqc_files.mix(REPEATS.out.masked_fasta.map {it[1]})
-    ch_multiqc_files = ch_multiqc_files.mix(REPEATS.out.repeat_tbl.map {it[1]})
-    ch_versions = ch_versions.mix(REPEATS.out.versions.first())
+    // REPEATS (
+    //     ch_assembly_scaffold // path to genome scaffold
+    // )
+    // ch_multiqc_files = ch_multiqc_files.mix(REPEATS.out.masked_fasta.map {it[1]})
+    // ch_multiqc_files = ch_multiqc_files.mix(REPEATS.out.repeat_tbl.map {it[1]})
+    // ch_versions = ch_versions.mix(REPEATS.out.versions.first())
 
     //
     // Collate and save software versions

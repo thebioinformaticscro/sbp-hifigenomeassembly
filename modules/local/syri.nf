@@ -1,5 +1,5 @@
 process SYRI {
-    tag "$meta.id"
+    tag "${meta.id}.${meta.type}"
     label 'process_high'
 
     conda "bioconda::plotsr=1.1.1 bioconda::syri=1.6.3"
@@ -8,9 +8,9 @@ process SYRI {
         'community.wave.seqera.io/library/plotsr_syri:5cffccf51a051df6' }"
 
     input:
-    tuple val(meta), path(sam)
-    path(ref)
-    tuple val(meta), path(scaffold)
+    tuple val(meta), path(sam), path(scaffold), path(ref)
+    // path(ref)
+    // tuple val(meta), path(scaffold)
 
     output:
     tuple val(meta), path("*.png"), emit: png

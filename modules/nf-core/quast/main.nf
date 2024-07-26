@@ -1,5 +1,5 @@
 process QUAST {
-    tag "$meta.id"
+    tag "${meta.id}.${meta.type}"
     label 'process_high'
 
     conda "${moduleDir}/environment.yml"
