@@ -57,7 +57,7 @@ workflow ASSEMBLY_QC {
     )
     ch_versions = ch_versions.mix(QUAST.out.versions.first())
 
-    ch_assembly_fastq = ch_assembly_fasta.combine( ch_fastq, by: { it[0].id } )
+    ch_assembly_fastq = ch_assembly_fasta.combine(ch_fastq, by:0)
     ch_assembly_fastq.view()
     KAT_HIST ( ch_assembly_fastq )
     ch_versions = ch_versions.mix(KAT_HIST.out.versions.first())
