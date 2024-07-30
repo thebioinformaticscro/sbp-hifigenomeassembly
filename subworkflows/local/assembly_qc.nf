@@ -55,7 +55,7 @@ workflow ASSEMBLY_QC {
                                         }
     
     ch_assembly_scaffold_renamed = ch_assembly_scaffold.map { meta, path ->  
-                                        meta = meta + [assembly:'contig']
+                                        meta = meta + [assembly:'scaffold']
                                         [meta, path]
                                         }
 
