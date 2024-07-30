@@ -25,13 +25,21 @@ process RAGTAG {
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
     ragtag.py \\
+        correct \\
+        $args \\
+        -t $task.cpus \\
+        -o ${meta.id}.${meta.type}_ragtag_output \\
+        $ref \\
+        $assembly
+
+    ragtag.py \\
         scaffold \\
         $args \\
         -t $task.cpus \\
         -o ${meta.id}.${meta.type}_ragtag_output \\
         -u \\
         $ref \\
-        $assembly
+        ${meta.id}.${meta.type}_ragtag_output/ragtag.correct.fasta
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
