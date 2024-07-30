@@ -70,18 +70,18 @@ workflow ASSEMBLE {
     //
     //SUBWORKFLOW: QC the genome assembly (contigs and scaffolded assembly)
     //
-    ASSEMBLY_QC (
-        ch_assembly_fasta,              // path to genome assembly 
-        ch_corrected_ref,
-        ch_samplesheet
-    )
+    // ASSEMBLY_QC (
+    //     ch_assembly_fasta,              // path to genome assembly 
+    //     ch_corrected_ref,
+    //     ch_samplesheet
+    // )
     
-    ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.cov_plot.map {it[1]})
-    ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.busco_plot.map {it[1]})
-    ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.quast_plots.map {it[1]})
-    ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.kat_plots.map {it[1]})
+    // ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.cov_plot.map {it[1]})
+    // ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.busco_plot.map {it[1]})
+    // ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.quast_plots.map {it[1]})
+    // ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.kat_plots.map {it[1]})
 
-    ch_versions = ch_versions.mix(ASSEMBLY_QC.out.versions.first())
+    // ch_versions = ch_versions.mix(ASSEMBLY_QC.out.versions.first())
 
     //
     // SUBWORKFLOW: Synteny analysis
@@ -97,23 +97,23 @@ workflow ASSEMBLE {
     // //
     // // SUBWORKFLOW: SV analysis
     // //
-    SV (
-        ch_assembly_scaffold, // path to genome scaffold
-        ch_corrected_ref
-    )
-    ch_multiqc_files = ch_multiqc_files.mix(SV.out.sv_calls.map {it[1]})
-    ch_multiqc_files = ch_multiqc_files.mix(SV.out.sv_plot.map {it[1]})
-    ch_versions = ch_versions.mix(SV.out.versions.first())
+    // SV (
+    //     ch_assembly_scaffold, // path to genome scaffold
+    //     ch_corrected_ref
+    // )
+    // ch_multiqc_files = ch_multiqc_files.mix(SV.out.sv_calls.map {it[1]})
+    // ch_multiqc_files = ch_multiqc_files.mix(SV.out.sv_plot.map {it[1]})
+    // ch_versions = ch_versions.mix(SV.out.versions.first())
 
-    //
-    // SUBWORKFLOW: Repeat masking
-    //
-    REPEATS (
-        ch_assembly_scaffold // path to genome scaffold
-    )
-    ch_multiqc_files = ch_multiqc_files.mix(REPEATS.out.masked_fasta.map {it[1]})
-    ch_multiqc_files = ch_multiqc_files.mix(REPEATS.out.repeat_tbl.map {it[1]})
-    ch_versions = ch_versions.mix(REPEATS.out.versions.first())
+    // //
+    // // SUBWORKFLOW: Repeat masking
+    // //
+    // REPEATS (
+    //     ch_assembly_scaffold // path to genome scaffold
+    // )
+    // ch_multiqc_files = ch_multiqc_files.mix(REPEATS.out.masked_fasta.map {it[1]})
+    // ch_multiqc_files = ch_multiqc_files.mix(REPEATS.out.repeat_tbl.map {it[1]})
+    // ch_versions = ch_versions.mix(REPEATS.out.versions.first())
 
     //
     // Collate and save software versions
