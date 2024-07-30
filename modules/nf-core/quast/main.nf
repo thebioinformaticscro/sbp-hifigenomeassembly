@@ -1,5 +1,5 @@
 process QUAST {
-    tag "${meta.id}.${meta.type}"
+    tag "${meta.id}.${meta.type}.${meta.assembly}"
     label 'process_high'
 
     conda "${moduleDir}/environment.yml"
@@ -25,7 +25,7 @@ process QUAST {
 
     script:
     def args      = task.ext.args   ?: ''
-    prefix        = task.ext.prefix ?: "${meta.id}.${meta.type}_quast"
+    prefix        = task.ext.prefix ?: "${meta.id}.${meta.type}.${meta.assembly}_quast"
     def features  = gff             ?  "--features $gff" : ''
     def reference = ref           ?  "-r $ref"       : ''
     """
