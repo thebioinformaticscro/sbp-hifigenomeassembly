@@ -33,13 +33,21 @@ process RAGTAG {
         $assembly
 
     ragtag.py \\
+        patch \\
+        $args \\
+        -t $task.cpus \\
+        -o ${meta.id}.${meta.type}_ragtag_output \\
+        ${meta.id}.${meta.type}_ragtag_output/ragtag.correct.fasta \\
+        $ref
+
+    ragtag.py \\
         scaffold \\
         $args \\
         -t $task.cpus \\
         -o ${meta.id}.${meta.type}_ragtag_output \\
         -u \\
         $ref \\
-        ${meta.id}.${meta.type}_ragtag_output/ragtag.correct.fasta
+        ${meta.id}.${meta.type}_ragtag_output/ragtag.patch.fasta
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
