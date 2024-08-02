@@ -37,7 +37,7 @@ process RAGTAG {
         $args \\
         -t $task.cpus \\
         -o ${meta.id}.${meta.type}_ragtag_output \\
-        --nucmer-params ['--mumreference'] \\
+        --nucmer-params --mumreference \\
         ${meta.id}.${meta.type}_ragtag_output/ragtag.correct.fasta \\
         $ref
 
