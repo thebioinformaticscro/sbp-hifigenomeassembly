@@ -11,9 +11,9 @@ process RAGTAG {
     tuple val(meta), path(assembly), path(ref)
 
     output:
-    tuple val(meta), path("*_ragtag_output/ragtag.scaffold.stats")    , emit: stats 
-    tuple val(meta), path("*_ragtag_output/ragtag.scaffold.fasta")    , emit: fasta 
-    tuple val(meta), path("*_ragtag_output/ragtag.scaffold.agp")      , emit: agp 
+    //tuple val(meta), path("*_ragtag_output/ragtag.scaffold.stats")    , emit: stats 
+    tuple val(meta), path("*_ragtag_output/ragtag.patch.fasta")    , emit: fasta // change to ragtag.scaffold.fasta if scaffolding is final step
+    tuple val(meta), path("*_ragtag_output/ragtag.patch.agp")      , emit: agp // hange to ragtag.scaffold.agp if scaffolding is final step
     tuple val(meta), path("*_ragtag_output")                          , emit: ragtag_dir
     path "versions.yml"                                               , emit: versions
 
@@ -33,22 +33,22 @@ process RAGTAG {
         $assembly
 
     ragtag.py \\
-        patch \\
-        $args \\
-        -t $task.cpus \\
-        -o ${meta.id}.${meta.type}_ragtag_output \\
-        --nucmer-params="--mumreference" \\
-        ${meta.id}.${meta.type}_ragtag_output/ragtag.correct.fasta \\
-        $ref
-
-    ragtag.py \\
         scaffold \\
         $args \\
         -t $task.cpus \\
         -o ${meta.id}.${meta.type}_ragtag_output \\
-        -u \\
         $ref \\
-        ${meta.id}.${meta.type}_ragtag_output/ragtag.patch.fasta
+        ${meta.id}.${meta.type}_ragtag_output/ragtag.correct.fasta
+
+    ragtag.py \\
+        patch \\
+        $args \\
+        -t $task.cpus \\
+        -o ${meta.id}.${meta.type}_ragtag_output \\
+        -u \\
+        --nucmer-params="--mumreference" \\
+        ${meta.id}.${meta.type}_ragtag_output/ragtag.scaffold.fasta \\
+        $ref
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
