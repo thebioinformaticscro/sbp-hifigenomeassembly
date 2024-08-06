@@ -30,13 +30,26 @@ process QUAST {
     def reference = ref           ?  "-r $ref"       : ''
     """
     chmod 775 /usr/local/lib/python3.9/site-packages/quast_libs/
-    quast.py \\
-        --output-dir $prefix \\
-        $reference \\
-        $features \\
-        --threads $task.cpus \\
-        $args \\
-        ${consensus.join(' ')}
+    if [[ ${meta.assembly} == 'contig' ]]; then
+        quast.py \\
+            --output-dir $prefix \\
+            $reference \\
+            $features \\
+            --threads $task.cpus \\
+            --circos \\
+            $args \\
+            ${consensus.join(' ')}
+    else
+        quast.py \\
+            --output-dir $prefix \\
+            $reference \\
+            $features \\
+            --threads $task.cpus \\
+            --circos \\
+            -s \\ 
+            $args \\
+            ${consensus.join(' ')}
+    fi
 
     ln -s ${prefix}/report.tsv ${prefix}.tsv
     [ -f  ${prefix}/contigs_reports/all_alignments_transcriptome.tsv ] && ln -s ${prefix}/contigs_reports/all_alignments_transcriptome.tsv ${prefix}_transcriptome.tsv
