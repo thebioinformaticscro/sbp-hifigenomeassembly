@@ -1,6 +1,7 @@
 process QUAST {
     tag "${meta.id}.${meta.type}.${meta.assembly}"
     label 'process_high'
+    debug true
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
@@ -29,9 +30,10 @@ process QUAST {
     def features  = gff             ?  "--features $gff" : ''
     def reference = ref             ?  "-r $ref"       : ''
     """
+    echo 'HI!'
     chmod 775 /usr/local/lib/python3.9/site-packages/quast_libs/
     if [[ "${meta.assembly}" == "contig" ]]; then
-        echo "${meta.assembly}"
+        echo "Option number 1"
         quast.py \\
             --output-dir $prefix \\
             $reference \\
@@ -41,7 +43,7 @@ process QUAST {
             $args \\
             ${consensus.join(' ')}
     elif [[ "${meta.assembly}" == "scaffold" ]]; then
-        echo "${meta.assembly}"
+        echo "Option number 2"
         quast.py \\
             --output-dir $prefix \\
             $reference \\
