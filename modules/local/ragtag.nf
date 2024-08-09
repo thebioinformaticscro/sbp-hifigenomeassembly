@@ -4,8 +4,8 @@ process RAGTAG {
 
     conda "bioconda::ragtag=2.1.0 bioconda::samtools=1.20"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'oras://community.wave.seqera.io/library/ragtag_samtools:de13f7e6599e59b4' :
-        'community.wave.seqera.io/library/ragtag_samtools:de13f7e6599e59b4' }"
+        'oras://community.wave.seqera.io/library/minimap2_ragtag:9b89ec13b3b443c1 ' :
+        'community.wave.seqera.io/library/minimap2_ragtag:9b89ec13b3b443c1 ' }"
 
     input:
     tuple val(meta), path(assembly), path(ref)
@@ -35,6 +35,7 @@ process RAGTAG {
     ragtag.py \\
         scaffold \\
         $args \\
+        -r \\
         -t $task.cpus \\
         -o ${meta.id}.${meta.type}_ragtag_output \\
         $ref \\
