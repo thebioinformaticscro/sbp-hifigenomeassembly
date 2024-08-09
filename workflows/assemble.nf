@@ -87,13 +87,13 @@ workflow ASSEMBLE {
     //
     // SUBWORKFLOW: Synteny analysis
     //
-    SYNTENY (
-        ch_samplesheet,
-        ch_assembly_scaffold, // path to genome scaffold
-        ch_corrected_ref      // path to reference genome 
-    )
-    ch_multiqc_files = ch_multiqc_files.mix(SYNTENY.out.synteny_plot.map {it[1]})
-    ch_versions = ch_versions.mix(SYNTENY.out.versions.first())
+    // SYNTENY (
+    //     ch_samplesheet,
+    //     ch_assembly_scaffold, // path to genome scaffold
+    //     ch_corrected_ref      // path to reference genome 
+    // )
+    // ch_multiqc_files = ch_multiqc_files.mix(SYNTENY.out.synteny_plot.map {it[1]})
+    // ch_versions = ch_versions.mix(SYNTENY.out.versions.first())
 
     // //
     // // SUBWORKFLOW: SV analysis
