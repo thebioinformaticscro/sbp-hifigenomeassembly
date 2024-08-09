@@ -49,7 +49,6 @@ process QUAST {
             $features \\
             --threads $task.cpus \\
             --circos \\
-            -s \\ 
             $args \\
             ${consensus.join(' ')}
     fi
