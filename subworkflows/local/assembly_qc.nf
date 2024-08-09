@@ -62,13 +62,13 @@ workflow ASSEMBLY_QC {
     ch_assembly_ref = ch_assembly_fasta_renamed.combine(ch_corrected_ref)
     ch_scaffold_ref = ch_assembly_scaffold_renamed.combine(ch_corrected_ref)
     ch_contigs_scaffold_ref = ch_assembly_ref.mix(ch_scaffold_ref)
-    ch_assembly_ref.view()
+    ch_contigs_scaffold_ref.view()
 
-    QUAST (
-        ch_contigs_scaffold_ref,
-        params.ref_gff
-    )
-    ch_versions = ch_versions.mix(QUAST.out.versions.first())
+    // QUAST (
+    //     ch_contigs_scaffold_ref,
+    //     params.ref_gff
+    // )
+    // ch_versions = ch_versions.mix(QUAST.out.versions.first())
 
     // ch_assembly_fasta_id_only = ch_assembly_fasta.map { meta, path ->  
     //                                     [meta.subMap('id'), path]
