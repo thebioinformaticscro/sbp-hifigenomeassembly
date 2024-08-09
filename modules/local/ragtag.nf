@@ -37,7 +37,6 @@ process RAGTAG {
         $args \\
         -t $task.cpus \\
         -o ${meta.id}.${meta.type}_ragtag_output \\
-        -r \\
         $ref \\
         ${meta.id}.${meta.type}_ragtag_output/ragtag.correct.fasta
 
