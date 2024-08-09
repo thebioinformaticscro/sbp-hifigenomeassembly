@@ -62,7 +62,7 @@ workflow ASSEMBLY_QC {
     ch_assembly_ref = ch_assembly_fasta_renamed.combine(ch_corrected_ref)
     ch_scaffold_ref = ch_assembly_scaffold_renamed.combine(ch_corrected_ref)
     ch_contigs_scaffold_ref = ch_assembly_ref.mix(ch_scaffold_ref)
-    //ch_assembly_ref.view()
+    ch_assembly_ref.view()
 
     QUAST (
         ch_contigs_scaffold_ref,
