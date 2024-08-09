@@ -38,7 +38,6 @@ process RAGTAG {
         -t $task.cpus \\
         -o ${meta.id}.${meta.type}_ragtag_output \\
         -r \\
-        --aligner minimap2 \\
         $ref \\
         ${meta.id}.${meta.type}_ragtag_output/ragtag.correct.fasta
 
