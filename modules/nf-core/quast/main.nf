@@ -48,7 +48,7 @@ process QUAST {
             --circos \\
             -s \\ 
             $args \\
-            $consensus
+            ${consensus.join(' ')}
     fi
 
     ln -s ${prefix}/report.tsv ${prefix}.tsv
