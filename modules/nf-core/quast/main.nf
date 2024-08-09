@@ -30,7 +30,6 @@ process QUAST {
     def features  = gff             ?  "--features $gff" : ''
     def reference = ref             ?  "-r $ref"       : ''
     """
-    echo 'HI!'
     chmod 775 /usr/local/lib/python3.9/site-packages/quast_libs/
     if [[ "${meta.assembly}" == "contig" ]]; then
         echo "Option number 1"
