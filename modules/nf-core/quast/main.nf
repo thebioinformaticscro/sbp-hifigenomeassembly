@@ -45,6 +45,7 @@ process QUAST {
         echo "Option number 2"
         quast.py \\
             --output-dir $prefix \\
+            --split-scaffolds \\
             $reference \\
             $features \\
             --threads $task.cpus \\
