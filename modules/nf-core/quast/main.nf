@@ -25,12 +25,13 @@ process QUAST {
 
     script:
     def args      = task.ext.args   ?: ''
-    prefix        = task.ext.prefix ?: "${meta.id}.${meta.type}.${meta.assembly}_quast"
+    def prefix    = task.ext.prefix ?: "${meta.id}.${meta.type}.${meta.assembly}_quast"
     def features  = gff             ?  "--features $gff" : ''
-    def reference = ref           ?  "-r $ref"       : ''
+    def reference = ref             ?  "-r $ref"       : ''
     """
     chmod 775 /usr/local/lib/python3.9/site-packages/quast_libs/
-    if [[ ${meta.assembly} == 'contig' ]]; then
+    if [[ "${meta.assembly}" == "contig" ]]; then
+        echo "${meta.assembly}"
         quast.py \\
             --output-dir $prefix \\
             $reference \\
@@ -39,7 +40,8 @@ process QUAST {
             --circos \\
             $args \\
             ${consensus.join(' ')}
-    else
+    elif [[ "${meta.assembly}" == "scaffold" ]]; then
+        echo "${meta.assembly}"
         quast.py \\
             --output-dir $prefix \\
             $reference \\
