@@ -45,7 +45,6 @@ process RAGTAG {
         patch \\
         $args \\
         --aligner minimap2 \\
-        --fill-only \\
         -t $task.cpus \\
         -o ${meta.id}.${meta.type}_ragtag_output \\
         ${meta.id}.${meta.type}_ragtag_output/ragtag.scaffold.fasta \\
