@@ -35,7 +35,7 @@ process RAGTAG {
     ragtag.py \\
         scaffold \\
         $args \\
-        -r \\
+        -u \\
         -t $task.cpus \\
         -o ${meta.id}.${meta.type}_ragtag_output \\
         $ref \\
