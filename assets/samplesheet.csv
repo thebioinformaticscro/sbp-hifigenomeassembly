@@ -1,2 +1,2 @@
 sample,fastq,fasta
-subJ,data/J.fastq.gz,data/BALB_cJ_v3_converted.primary.fasta
+J,data/J.fastq.gz,data/BALB_cJ_v3_converted.primary.fasta
