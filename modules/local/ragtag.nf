@@ -35,12 +35,23 @@ process RAGTAG {
     ragtag.py \\
         scaffold \\
         $args \\
-        -u \\
+        -r \\
         -t $task.cpus \\
         -o ${meta.id}.${meta.type}_ragtag_output \\
         $ref \\
         ${meta.id}.${meta.type}_ragtag_output/ragtag.correct.fasta
 
+    ragtag.py \\
+        patch \\
+        $args \\
+        --aligner minimap2 \\
+        --fill-only \\
+        -u \\
+        -t $task.cpus \\
+        -o ${meta.id}.${meta.type}_ragtag_output \\
+        ${meta.id}.${meta.type}_ragtag_output/ragtag.scaffold.fasta \\
+        $ref
+        
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         ragtag: \$(ragtag.py --version)
