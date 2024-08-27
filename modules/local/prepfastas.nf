@@ -26,6 +26,7 @@ process PREP_FASTAS {
     def prefix = task.ext.prefix ?: "${meta.id}.${meta.type}"
     def VERSION = '1.0' // WARN: Version information not provided by tool on CLI. Please update this string when bumping container versions.
     """
+
     sed 's/_RagTag//' $scaffold > ${prefix}_renamed.scaffold.fasta
     ref_name=\$(basename $ref .fasta)
     chrs=\$(cat ${chr_names})
