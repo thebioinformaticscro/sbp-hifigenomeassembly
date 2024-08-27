@@ -58,6 +58,7 @@ process RAGTAG {
     map_chrom_names.py scaffold.lengths patch.lengths
     awk 'FNR==NR { a[">"\$1]=\$2; next } \$1 in a { sub(/>.*/,">"a[\$1],\$1)}1' map_ids.txt ragtag.patch.fasta > ragtag.patch.renamed.fasta
 
+    cd .. 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         ragtag: \$(ragtag.py --version)
