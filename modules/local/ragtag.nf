@@ -52,6 +52,7 @@ process RAGTAG {
         ${meta.id}.${meta.type}_ragtag_output/ragtag.scaffold.fasta \\
         $ref
 
+    cd ${meta.id}.${meta.type}_ragtag_output/
     bioawk -c fastx '{print \$name "\t" length(\$seq)}' ragtag.patch.fasta > patch.lengths
     bioawk -c fastx '{print \$name "\t" length(\$seq)}' ragtag.scaffold.fasta | grep "chr" > scaffold.lengths
     map_chrom_names.py scaffold.lengths patch.lengths
