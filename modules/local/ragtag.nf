@@ -24,6 +24,7 @@ process RAGTAG {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
+    bioawk -c fastx '{print \$name "\t" length(\$seq)}' "${ref}" | grep "chr" > scaffold.lengths
     ragtag.py \\
         correct \\
         $args \\
@@ -44,7 +45,6 @@ process RAGTAG {
 
     cd ${meta.id}.${meta.type}_ragtag_output/
     bioawk -c fastx '{print \$name "\t" length(\$seq)}' ragtag.patch.fasta > patch.lengths
-    bioawk -c fastx '{print \$name "\t" length(\$seq)}' $ref | grep "chr" > scaffold.lengths
     map_chrom_names.py scaffold.lengths patch.lengths
     awk 'FNR==NR { a[">"\$1]=\$2; next } \$1 in a { sub(/>.*/,">"a[\$1],\$1)}1' map_ids.txt ragtag.patch.fasta > ragtag.patch.renamed.fasta
 
