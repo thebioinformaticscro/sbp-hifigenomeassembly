@@ -42,10 +42,10 @@ workflow RL_HIFIGENOMEASSEMBLY {
     ASSEMBLE (
         samplesheet
     )
-    // ch_multiqc = ASSEMBLE.out.multiqc_report 
+    ch_multiqc = ASSEMBLE.out.multiqc_report 
 
-    // emit:
-    // multiqc_report = ch_multiqc // channel: /path/to/multiqc_report.html
+    emit:
+    multiqc_report = ch_multiqc // channel: /path/to/multiqc_report.html
 
 }
 /*
