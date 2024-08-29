@@ -14,8 +14,9 @@ process QUAST {
     path(gff)
 
     output:
-    tuple val(meta), path("${meta.id}.${meta.type}.${meta.assembly}_quast")      , emit: results
-    path "versions.yml"                                                          , emit: versions
+    tuple val(meta), path("${meta.id}.${meta.type}.${meta.assembly}_quast")           , emit: results
+    tuple val(meta), path("${meta.id}.${meta.type}.${meta.assembly}_quast/report.tsv"), emit: tsv
+    path "versions.yml"                                                               , emit: versions
 
     when:
     task.ext.when == null || task.ext.when

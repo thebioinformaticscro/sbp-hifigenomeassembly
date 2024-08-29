@@ -96,10 +96,13 @@ workflow ASSEMBLY_QC {
     ch_versions = ch_versions.mix(KAT_HIST.out.versions.first())
 
     emit:
-    kat_plots               = KAT_HIST.out.png              // channel: [ val(meta), path(png) ]
-    quast_plots             = QUAST.out.results             // channel: [ val(meta), path(directory) ]
-    cov_plot                = COV_TABLE_PLOT.out.pdf        // channel: [ val(meta), path(pdf) ]
-    busco_plot              = BUSCO_GENERATEPLOT.out.png    // channel: [ val(meta), path(png) ]
-    versions                = ch_versions                   // channel: [ versions.yml ]
+    kat_plots               = KAT_HIST.out.png                     // channel: [ val(meta), path(png) ]
+    kat_data                = KAT_HIST.out.json
+    quast_plots             = QUAST.out.results                    // channel: [ val(meta), path(directory) ]
+    quast_data              = QUAST.out.tsv 
+    cov_plot                = COV_TABLE_PLOT.out.pdf               // channel: [ val(meta), path(pdf) ]
+    busco_plot              = BUSCO_GENERATEPLOT.out.png           // channel: [ val(meta), path(png) ]
+    busco_data              = BUSCO_BUSCO.out.short_summaries_txt
+    versions                = ch_versions                          // channel: [ versions.yml ]
 }
 

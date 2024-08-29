@@ -13,6 +13,7 @@ process KAT_HIST {
     output:
     tuple val(meta), path("*.png")                    , emit: png          
     tuple val(meta), path("*.pdf")                    , emit: pdf          , optional: true
+    tuple val(meta), path("*.dist_analysis.json")     , emit: json
     path "versions.yml"                               , emit: versions
 
     when:
