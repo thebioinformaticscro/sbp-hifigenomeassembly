@@ -32,7 +32,7 @@ process FIND_REPEATS {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        findrepeats: \$(RepeatModeler --version)
+        RepeatModeler: \$(RepeatModeler --version) | sed 's/RepeatModeler version //g'
     END_VERSIONS
     """
 

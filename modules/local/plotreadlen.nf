@@ -37,7 +37,7 @@ process PLOT_READ_LEN {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        plotreadlen: $VERSION)
+        R: \$(R --version) | head -1 | sed 's/R version //g'
     END_VERSIONS
     """
 }

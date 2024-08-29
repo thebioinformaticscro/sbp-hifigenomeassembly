@@ -29,7 +29,7 @@ process ASSEMBLY_STATS2 {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        assemblystats: \$(assembly-stats -v)
+        assemblystats: \$(assembly-stats -v) | sed 's/Version: //g'
     END_VERSIONS
     """
 
