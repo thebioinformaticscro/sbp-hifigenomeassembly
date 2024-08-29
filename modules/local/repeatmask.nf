@@ -35,7 +35,7 @@ process REPEAT_MASK {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        RepeatMasker: \$(RepeatMasker -v) | sed 's/RepeatMasker version //g'
+        RepeatMasker: \$(RepeatMasker -v | sed 's/RepeatMasker version //g')
     END_VERSIONS
     """
 
@@ -47,7 +47,7 @@ process REPEAT_MASK {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        RepeatMasker: \$(RepeatMasker -v) | sed 's/RepeatMasker version //g'
+        RepeatMasker: \$(RepeatMasker -v | sed 's/RepeatMasker version //g')
     END_VERSIONS
     """
 }

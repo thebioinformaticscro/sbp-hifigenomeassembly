@@ -28,7 +28,7 @@ process COV_TABLE_PLOT {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        R: \$(R --version) | head -1 | sed 's/R version //g'
+        R: \$(R --version | head -1 | sed 's/R version //g')
     END_VERSIONS
     """
 
@@ -40,7 +40,7 @@ process COV_TABLE_PLOT {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        R: \$(R --version) | head -1 | sed 's/R version //g'
+        R: \$(R --version | head -1 | sed 's/R version //g')
     END_VERSIONS
     """
 }
