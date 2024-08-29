@@ -24,7 +24,6 @@ process RAGTAG {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    bioawk -c fastx '{print \$name "\t" length(\$seq)}' "${ref}" | grep "chr" > scaffold.lengths
     ragtag.py \\
         correct \\
         $args \\
@@ -34,18 +33,28 @@ process RAGTAG {
         $assembly
 
     ragtag.py \\
+        scaffold \\
+        $args \\
+        -r \\
+        -t $task.cpus \\
+        -o ${meta.id}.${meta.type}_ragtag_output \\
+        $ref \\
+        ${meta.id}.${meta.type}_ragtag_output/ragtag.correct.fasta
+
+    ragtag.py \\
         patch \\
         $args \\
         --aligner minimap2 \\
+        --fill-only \\
         -u \\
         -t $task.cpus \\
         -o ${meta.id}.${meta.type}_ragtag_output \\
-        ${meta.id}.${meta.type}_ragtag_output/ragtag.correct.fasta \\
+        ${meta.id}.${meta.type}_ragtag_output/ragtag.scaffold.fasta \\
         $ref
 
-    mv scaffold.lengths ${meta.id}.${meta.type}_ragtag_output/
     cd ${meta.id}.${meta.type}_ragtag_output/
     bioawk -c fastx '{print \$name "\t" length(\$seq)}' ragtag.patch.fasta > patch.lengths
+    bioawk -c fastx '{print \$name "\t" length(\$seq)}' ragtag.scaffold.fasta | grep "chr" > scaffold.lengths
     map_chrom_names.py scaffold.lengths patch.lengths
     awk 'FNR==NR { a[">"\$1]=\$2; next } \$1 in a { sub(/>.*/,">"a[\$1],\$1)}1' map_ids.txt ragtag.patch.fasta > ragtag.patch.renamed.fasta
 
