@@ -1,6 +1,6 @@
 process RAGTAG {
     tag "$meta.id"
-    label 'process_high'
+    label 'process_medium'
 
     conda "bioconda::bioawk=1.0 bioconda::ragtag=2.1.0 bioconda::samtools=1.20"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?

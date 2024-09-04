@@ -1,6 +1,6 @@
 process CALL_SV {
     tag "${meta.id}.${meta.type}"
-    label 'process_high'
+    label 'process_low'
 
     conda "bioconda::samtools=1.20 bioconda::svim-asm=1.0.3"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?

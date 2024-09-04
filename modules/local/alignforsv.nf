@@ -1,6 +1,6 @@
 process ALIGN_FOR_SV {
     tag "${meta.id}.${meta.type}"
-    label 'process_high'
+    label 'process_medium'
 
     conda "bioconda::minimap2=2.28 bioconda::samtools=1.20"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?

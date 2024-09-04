@@ -1,6 +1,6 @@
 process QUAST {
     tag "${meta.id}.${meta.type}.${meta.assembly}"
-    label 'process_high'
+    label 'process_medium'
     debug true
 
     conda "${moduleDir}/environment.yml"

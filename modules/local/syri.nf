@@ -1,6 +1,6 @@
 process SYRI {
     tag "${meta.id}.${meta.type}"
-    label 'process_high'
+    label 'process_low'
 
     conda "bioconda::plotsr=1.1.1 bioconda::syri=1.6.3"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
