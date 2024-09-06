@@ -14,7 +14,7 @@ workflow GENOME_ASSEMBLY {
     main:
 
     ch_fastq = ch_samplesheet.map { meta, file, fasta -> [meta, file] }
-    ch_ref = ch_samplesheet.map { meta, file, fasta -> [fasta] }
+    ch_ref = ch_samplesheet.map { meta, file, fasta -> [meta, fasta] }
     ch_chr_names = params.chr_names
     ch_versions = Channel.empty()
 
@@ -25,22 +25,39 @@ workflow GENOME_ASSEMBLY {
                                         meta = meta + [type:'primary']
                                         [meta, path]
                                         }
-    
+    ch_ref_primary = ch_ref.map { meta, path ->
+                                meta = meta + [type:'primary']
+                                [meta,path]
+                                }
+
     ch_hap1 = HIFIASM.out.haplotype1.map { meta, path ->  
                                         meta = meta + [type:'hap1']
                                         [meta, path]
                                         }
+    ch_ref_hap1 = ch_ref.map { meta, path ->
+                                meta = meta + [type:'hap1']
+                                [meta,path]
+                                }
+
     ch_hap2 = HIFIASM.out.haplotype2.map { meta, path ->  
                                         meta = meta + [type:'hap2']
                                         [meta, path]
                                         }
+
+    ch_ref_hap2 = ch_ref.map { meta, path ->
+                                meta = meta + [type:'hap2']
+                                [meta,path]
+                                }
     // trying to make a new meta map (https://training.nextflow.io/advanced/metadata/#first-pass)
     ch_both_haps = ch_hap1.mix(ch_hap2)
+    ch_both_refs = ch_ref_hap1.mix(ch_ref_hap2)
 
     if (params.primary_only) {
         ch_haps = ch_hap_primary
+        ch_refs = ch_ref_primary
     } else {
         ch_haps = ch_both_haps
+        ch_refs = ch_both_refs
     }
     //ch_haps.view() - correct
 
@@ -56,13 +73,13 @@ workflow GENOME_ASSEMBLY {
             params.tax_id
     )
     FCSGX.out.cleaned_assembly.view()
-    ch_ref.view()
-    ch_assembly_ref = FCSGX.out.cleaned_assembly.combine(ch_ref)
+    ch_refs.view()
+    ch_assembly_ref = FCSGX.out.cleaned_assembly.combine(ch_refs,by:0)
     ch_assembly_ref.view()
     RAGTAG ( ch_assembly_ref  )
     ch_versions = ch_versions.mix(RAGTAG.out.versions.first())
 
-    ch_ragtag_ref = RAGTAG.out.fasta.combine(ch_ref)
+    ch_ragtag_ref = RAGTAG.out.fasta.combine(ch_refs,by:0)
 
     PREP_FASTAS ( ch_ragtag_ref,
                   ch_chr_names 
