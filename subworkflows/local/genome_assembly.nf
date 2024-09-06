@@ -56,7 +56,7 @@ workflow GENOME_ASSEMBLY {
     )
 
     ch_assembly_ref = FCSGX.out.cleaned_assembly.combine(ch_ref)
-
+    ch_assembly_ref.view()
     RAGTAG ( ch_assembly_ref  )
     ch_versions = ch_versions.mix(RAGTAG.out.versions.first())
 
