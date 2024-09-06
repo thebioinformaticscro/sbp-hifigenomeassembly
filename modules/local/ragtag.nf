@@ -25,7 +25,7 @@ process RAGTAG {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    sed -i 's/os.mkdir(output_path)/os.mkdirs(output_path, exist_ok=True)/' /opt/conda/bin/ragtag_correct.py
+    sed -i 's/os.mkdir(output_path)/os.makedirs(output_path, exist_ok=True)/' /opt/conda/bin/ragtag_correct.py
     ragtag.py \\
         correct \\
         $args \\
