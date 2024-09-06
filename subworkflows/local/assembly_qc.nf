@@ -79,8 +79,12 @@ workflow ASSEMBLY_QC {
     )
     ch_versions = ch_versions.mix(QUAST.out.versions.first())
 
-    ch_assembly_fasta_id_only = ch_assembly_fasta.map { meta, path ->  
-                                        [meta.subMap('id'), path]
+    // ch_assembly_fasta_id_only = ch_assembly_fasta.map { meta, path ->  
+    //                                     [meta.subMap('id'), path]
+    //                                     }
+    ch_fastq = ch_fastq.map { meta, path ->  
+                                        meta = meta + [type:'primary']
+                                        [meta, path]
                                         }
 
     ch_fastq1 = ch_fastq.map { meta, path ->  
@@ -96,7 +100,7 @@ workflow ASSEMBLY_QC {
 
     if (params.primary_only) {
         ch_fastqs = ch_fastq
-        ch_assembly_fasta = ch_assembly_fasta_id_only
+        //ch_assembly_fasta = ch_assembly_fasta_id_only
     } else {
         ch_fastqs = ch_both_fastqs
     }
