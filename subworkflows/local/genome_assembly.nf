@@ -50,12 +50,12 @@ workflow GENOME_ASSEMBLY {
 
     FCS_FCSADAPTOR ( TO_FASTA.out.fasta )
     ch_versions = ch_versions.mix(FCS_FCSADAPTOR.out.versions.first())
-    FCS_FCSADAPTOR.out.cleaned_assembly.view()
+    
     FCSGX ( FCS_FCSADAPTOR.out.cleaned_assembly,
             params.gxdb,
             params.tax_id
     )
-
+    FCSGX.out.cleaned_assembly.view()
     ch_assembly_ref = FCSGX.out.cleaned_assembly.combine(ch_ref)
     //ch_assembly_ref.view()
     RAGTAG ( ch_assembly_ref  )
