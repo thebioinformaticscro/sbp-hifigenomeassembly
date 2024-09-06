@@ -42,6 +42,7 @@ workflow GENOME_ASSEMBLY {
     } else {
         ch_haps = ch_both_haps
     }
+    ch_haps.view()
 
     TO_FASTA ( ch_haps )
 
@@ -56,7 +57,7 @@ workflow GENOME_ASSEMBLY {
     )
 
     ch_assembly_ref = FCSGX.out.cleaned_assembly.combine(ch_ref)
-    ch_assembly_ref.view()
+    //ch_assembly_ref.view()
     RAGTAG ( ch_assembly_ref  )
     ch_versions = ch_versions.mix(RAGTAG.out.versions.first())
 
