@@ -71,7 +71,7 @@ workflow ASSEMBLY_QC {
     ch_assembly_ref = ch_assembly_fasta_renamed.combine(ch_corrected_ref_contig,by:0)
     ch_scaffold_ref = ch_assembly_scaffold_renamed.combine(ch_corrected_ref_scaffold,by:0)
     ch_contigs_scaffold_ref = ch_assembly_ref.mix(ch_scaffold_ref)
-    ch_contigs_scaffold_ref.view()
+    //ch_contigs_scaffold_ref.view()
 
     QUAST (
         ch_contigs_scaffold_ref,
@@ -96,6 +96,7 @@ workflow ASSEMBLY_QC {
 
     if (params.primary_only) {
         ch_fastqs = ch_fastq
+        ch_assembly_fasta = ch_assembly_fasta_id_only
     } else {
         ch_fastqs = ch_both_fastqs
     }
