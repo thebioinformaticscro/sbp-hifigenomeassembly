@@ -6,6 +6,7 @@ process RAGTAG {
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'oras://community.wave.seqera.io/library/bioawk_ragtag_samtools:55562fd922507e03' :
         'community.wave.seqera.io/library/bioawk_ragtag_samtools:55562fd922507e03' }"
+    containerOptions = "--user root"
 
     input:
     tuple val(meta), path(assembly), path(ref)
