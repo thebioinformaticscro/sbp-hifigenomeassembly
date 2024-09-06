@@ -11,6 +11,9 @@ workflow SYNTENY {
 
     main:
     ch_versions = Channel.empty()
+    ch_assembly_scaffold.view()
+    ch_corrected_ref.view()
+    
     ch_scaffold_ref = ch_assembly_scaffold.combine(ch_corrected_ref, by:0)
 
     ALIGN_FOR_SYNTENY ( ch_scaffold_ref )

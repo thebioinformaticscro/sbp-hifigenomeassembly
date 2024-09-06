@@ -71,7 +71,7 @@ workflow ASSEMBLY_QC {
     ch_assembly_ref = ch_assembly_fasta_renamed.combine(ch_corrected_ref_contig,by:0)
     ch_scaffold_ref = ch_assembly_scaffold_renamed.combine(ch_corrected_ref_scaffold,by:0)
     ch_contigs_scaffold_ref = ch_assembly_ref.mix(ch_scaffold_ref)
-    //ch_contigs_scaffold_ref.view()
+    ch_contigs_scaffold_ref.view()
 
     QUAST (
         ch_contigs_scaffold_ref,
@@ -79,9 +79,6 @@ workflow ASSEMBLY_QC {
     )
     ch_versions = ch_versions.mix(QUAST.out.versions.first())
 
-    // ch_assembly_fasta_id_only = ch_assembly_fasta.map { meta, path ->  
-    //                                     [meta.subMap('id'), path]
-    //                                     }
     ch_fastq = ch_fastq.map { meta, path ->  
                                         meta = meta + [type:'primary']
                                         [meta, path]
@@ -95,18 +92,14 @@ workflow ASSEMBLY_QC {
                                         meta = meta + [type:'hap2']
                                         [meta, path]
                                         }
-    // trying to make a new meta map (https://training.nextflow.io/advanced/metadata/#first-pass)
     ch_both_fastqs = ch_fastq1.mix(ch_fastq2)
 
     if (params.primary_only) {
         ch_fastqs = ch_fastq
-        //ch_assembly_fasta = ch_assembly_fasta_id_only
     } else {
         ch_fastqs = ch_both_fastqs
     }
 
-    ch_fastqs.view()
-    ch_assembly_fasta.view()
     ch_assembly_fastq = ch_assembly_fasta.combine(ch_fastqs, by:0)
 
     KAT_HIST ( ch_assembly_fastq )
