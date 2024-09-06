@@ -42,12 +42,12 @@ workflow GENOME_ASSEMBLY {
     } else {
         ch_haps = ch_both_haps
     }
-    ch_haps.view()
+    //ch_haps.view() - correct
 
     TO_FASTA ( ch_haps )
 
     ch_versions = ch_versions.mix(TO_FASTA.out.versions.first())
-
+    TO_FASTA.out.view()
     FCS_FCSADAPTOR ( TO_FASTA.out.fasta )
     ch_versions = ch_versions.mix(FCS_FCSADAPTOR.out.versions.first())
 
