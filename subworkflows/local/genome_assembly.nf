@@ -72,10 +72,8 @@ workflow GENOME_ASSEMBLY {
             params.gxdb,
             params.tax_id
     )
-    FCSGX.out.cleaned_assembly.view()
-    ch_refs.view()
+    
     ch_assembly_ref = FCSGX.out.cleaned_assembly.combine(ch_refs,by:0)
-    ch_assembly_ref.view()
     RAGTAG ( ch_assembly_ref  )
     ch_versions = ch_versions.mix(RAGTAG.out.versions.first())
 

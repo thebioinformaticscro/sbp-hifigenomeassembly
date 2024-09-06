@@ -53,13 +53,23 @@ workflow ASSEMBLY_QC {
                                         [meta, path]
                                         }
     
+    ch_corrected_ref_contig = ch_corrected_ref.map { meta, path ->  
+                                        meta = meta + [assembly:'contig']
+                                        [meta, path]
+                                        }
+
     ch_assembly_scaffold_renamed = ch_assembly_scaffold.map { meta, path ->  
                                         meta = meta + [assembly:'scaffold']
                                         [meta, path]
                                         }
 
-    ch_assembly_ref = ch_assembly_fasta_renamed.combine(ch_corrected_ref)
-    ch_scaffold_ref = ch_assembly_scaffold_renamed.combine(ch_corrected_ref)
+    ch_corrected_ref_scaffold = ch_corrected_ref.map { meta, path ->  
+                                        meta = meta + [assembly:'scaffold']
+                                        [meta, path]
+                                        }
+
+    ch_assembly_ref = ch_assembly_fasta_renamed.combine(ch_corrected_ref_contig,by:0)
+    ch_scaffold_ref = ch_assembly_scaffold_renamed.combine(ch_corrected_ref_scaffold,by:0)
     ch_contigs_scaffold_ref = ch_assembly_ref.mix(ch_scaffold_ref)
     ch_contigs_scaffold_ref.view()
 
@@ -90,6 +100,8 @@ workflow ASSEMBLY_QC {
         ch_fastqs = ch_both_fastqs
     }
 
+    ch_fastqs.view()
+    ch_assembly_fasta.view()
     ch_assembly_fastq = ch_assembly_fasta.combine(ch_fastqs, by:0)
 
     KAT_HIST ( ch_assembly_fastq )
