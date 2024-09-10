@@ -1,3 +1,3 @@
 sample,fastq,fasta
-J20_APP,data/J20_APP.fastq.gz,data/mm39_renamed_reference_genome.fasta
-J20_CTL,data/J20_CTL.fastq.gz,data/mm39_renamed_reference_genome.fasta
+J20_APP,data/J20_APP.fastq.gz,data/BALB_cJ_v3_converted.primary.fasta
+J20_CTL,data/J20_CTL.fastq.gz,data/BALB_cJ_v3_converted.primary.fasta

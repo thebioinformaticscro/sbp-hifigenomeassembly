@@ -2,7 +2,7 @@ process RAGTAG {
     tag "$meta.id"
     label 'process_medium'
 
-    conda "bioconda::bioawk=1.0 bioconda::ragtag=2.1.0 bioconda::samtools=1.20"
+    conda "bioconda::bioawk=1.0 bioconda::ragtag=2.1.0"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
         'oras://community.wave.seqera.io/library/bioawk_ragtag:01f1649e264e30f7' :
         'community.wave.seqera.io/library/bioawk_ragtag:01f1649e264e30f7' }"
