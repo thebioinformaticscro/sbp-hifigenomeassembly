@@ -4,9 +4,8 @@ process RAGTAG {
 
     conda "bioconda::bioawk=1.0 bioconda::ragtag=2.1.0 bioconda::samtools=1.20"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'oras://community.wave.seqera.io/library/bioawk_ragtag_samtools:55562fd922507e03' :
-        'community.wave.seqera.io/library/bioawk_ragtag_samtools:55562fd922507e03' }"
-    //containerOptions = "--user root"
+        'oras://community.wave.seqera.io/library/bioawk_ragtag:01f1649e264e30f7' :
+        'community.wave.seqera.io/library/bioawk_ragtag:01f1649e264e30f7' }"
 
     input:
     tuple val(meta), path(assembly), path(ref)
@@ -25,12 +24,11 @@ process RAGTAG {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    #sed -i 's/os.mkdir(output_path)/os.makedirs(output_path, exist_ok=True)/' /opt/conda/bin/ragtag_correct.py
     ragtag.py \\
         correct \\
-        $args \\
         -t $task.cpus \\
         -o ${meta.id}.${meta.type}_ragtag_output \\
+        $args \\
         $ref \\
         $assembly
 
