@@ -50,10 +50,10 @@ workflow ASSEMBLY_QC {
 
     ch_assembly_fasta.view()
 
-    // ch_assembly_fasta_renamed = ch_assembly_fasta.map { meta, path ->  
-    //                                     meta = meta + [assembly:'contig']
-    //                                     [meta, path]
-    //                                     }
+    ch_assembly_fasta_renamed = ch_assembly_fasta.map { meta, path ->  
+                                        meta = meta + [assembly:'contig']
+                                        [meta, path]
+                                        }
     
     // ch_corrected_ref_contig = ch_corrected_ref.map { meta, path ->  
     //                                     meta = meta + [assembly:'contig']
