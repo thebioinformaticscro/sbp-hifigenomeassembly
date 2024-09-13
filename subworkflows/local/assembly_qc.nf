@@ -55,20 +55,20 @@ workflow ASSEMBLY_QC {
                                         [meta, path]
                                         }
     
-    // ch_corrected_ref_contig = ch_corrected_ref.map { meta, path ->  
-    //                                     meta = meta + [assembly:'contig']
-    //                                     [meta, path]
-    //                                     }
+    ch_corrected_ref_contig = ch_corrected_ref.map { meta, path ->  
+                                        meta = meta + [assembly:'contig']
+                                        [meta, path]
+                                        }
 
-    // ch_assembly_scaffold_renamed = ch_assembly_scaffold.map { meta, path ->  
-    //                                     meta = meta + [assembly:'scaffold']
-    //                                     [meta, path]
-    //                                     }
+    ch_assembly_scaffold_renamed = ch_assembly_scaffold.map { meta, path ->  
+                                        meta = meta + [assembly:'scaffold']
+                                        [meta, path]
+                                        }
 
-    // ch_corrected_ref_scaffold = ch_corrected_ref.map { meta, path ->  
-    //                                     meta = meta + [assembly:'scaffold']
-    //                                     [meta, path]
-    //                                     }
+    ch_corrected_ref_scaffold = ch_corrected_ref.map { meta, path ->  
+                                        meta = meta + [assembly:'scaffold']
+                                        [meta, path]
+                                        }
     // //ch_assembly_fasta_renamed.view()
     // //ch_corrected_ref_contig.view()
     // ch_assembly_ref = ch_assembly_fasta_renamed.combine(ch_corrected_ref_contig,by:0)
