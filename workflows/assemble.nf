@@ -75,7 +75,7 @@ workflow ASSEMBLE {
     )
     
     ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.busco_data.map {it[1]})
-    ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.quast_data.map {it[1]})
+    // ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.quast_data.map {it[1]})
     ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.kat_data.map {it[1]})
 
     ch_versions = ch_versions.mix(ASSEMBLY_QC.out.versions.first())
