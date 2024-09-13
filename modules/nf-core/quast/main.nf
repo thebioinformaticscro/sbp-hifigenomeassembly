@@ -10,7 +10,7 @@ process QUAST {
     containerOptions = "--user root"
 
     input:
-    tuple val(meta) , path(consensus), val(meta2), path(ref)
+    tuple val(meta) , path(consensus), path(ref)
     path(gff)
 
     output:

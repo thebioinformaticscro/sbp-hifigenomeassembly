@@ -48,10 +48,6 @@ workflow ASSEMBLY_QC {
     BUSCO_GENERATEPLOT ( BUSCO_BUSCO.out.short_summaries_txt )
     ch_versions = ch_versions.mix(BUSCO_GENERATEPLOT.out.versions.first())
 
-    // ch_assembly_fasta.view()
-    // ch_corrected_ref.view()
-    //ch_assembly_scaffold.view()
-
     ch_assembly_fasta_renamed = ch_assembly_fasta.map { meta, path ->  
                                         meta = meta + [assembly:'contig']
                                         [meta, path]
@@ -71,22 +67,16 @@ workflow ASSEMBLY_QC {
                                         meta = meta + [assembly:'scaffold']
                                         [meta, path]
                                         }
-    //ch_assembly_fasta_renamed.view()
-    //ch_corrected_ref_contig.view()
     ch_assembly_ref = ch_assembly_fasta_renamed.combine(ch_corrected_ref_contig,by:0)
-    // ch_assembly_ref.view()
-    //ch_assembly_scaffold_renamed.view()
-    //ch_corrected_ref_scaffold.view()
     ch_scaffold_ref = ch_assembly_scaffold_renamed.combine(ch_corrected_ref_scaffold,by:0)
-    //ch_scaffold_ref.view()
     ch_contigs_scaffold_ref = ch_assembly_ref.mix(ch_scaffold_ref)
     ch_contigs_scaffold_ref.view()
 
-    // QUAST (
-    //     ch_contigs_scaffold_ref,
-    //     params.ref_gff
-    // )
-    // ch_versions = ch_versions.mix(QUAST.out.versions.first())
+    QUAST (
+        ch_contigs_scaffold_ref,
+        params.ref_gff
+    )
+    ch_versions = ch_versions.mix(QUAST.out.versions.first())
 
     ch_fastq = ch_fastq.map { meta, path ->  
                                         meta = meta + [type:'primary']
@@ -117,8 +107,8 @@ workflow ASSEMBLY_QC {
     emit:
     kat_plots               = KAT_HIST.out.png                     // channel: [ val(meta), path(png) ]
     kat_data                = KAT_HIST.out.json
-    // quast_plots             = QUAST.out.results                    // channel: [ val(meta), path(directory) ]
-    // quast_data              = QUAST.out.tsv 
+    quast_plots             = QUAST.out.results                    // channel: [ val(meta), path(directory) ]
+    quast_data              = QUAST.out.tsv 
     cov_plot                = COV_TABLE_PLOT.out.pdf               // channel: [ val(meta), path(pdf) ]
     busco_plot              = BUSCO_GENERATEPLOT.out.png           // channel: [ val(meta), path(png) ]
     busco_data              = BUSCO_BUSCO.out.short_summaries_txt
