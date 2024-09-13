@@ -48,6 +48,8 @@ workflow ASSEMBLY_QC {
     BUSCO_GENERATEPLOT ( BUSCO_BUSCO.out.short_summaries_txt )
     ch_versions = ch_versions.mix(BUSCO_GENERATEPLOT.out.versions.first())
 
+    ch_assembly_fasta.view()
+
     ch_assembly_fasta_renamed = ch_assembly_fasta.map { meta, path ->  
                                         meta = meta + [assembly:'contig']
                                         [meta, path]
@@ -67,8 +69,8 @@ workflow ASSEMBLY_QC {
                                         meta = meta + [assembly:'scaffold']
                                         [meta, path]
                                         }
-    ch_assembly_fasta_renamed.view()
-    ch_corrected_ref_contig.view()
+    //ch_assembly_fasta_renamed.view()
+    //ch_corrected_ref_contig.view()
     ch_assembly_ref = ch_assembly_fasta_renamed.combine(ch_corrected_ref_contig,by:0)
     //ch_assembly_ref.view()
     ch_scaffold_ref = ch_assembly_scaffold_renamed.combine(ch_corrected_ref_scaffold,by:0)
