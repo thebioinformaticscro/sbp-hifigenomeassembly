@@ -42,10 +42,10 @@ workflow RL_HIFIGENOMEASSEMBLY {
     ASSEMBLE (
         samplesheet
     )
-    // ch_multiqc = ASSEMBLE.out.multiqc_report 
+    ch_multiqc = ASSEMBLE.out.multiqc_report 
 
-    // emit:
-    // multiqc_report = ch_multiqc // channel: /path/to/multiqc_report.html
+    emit:
+    multiqc_report = ch_multiqc // channel: /path/to/multiqc_report.html
 
 }
 /*
@@ -81,15 +81,15 @@ workflow {
     //
     // SUBWORKFLOW: Run completion tasks
     //
-    // PIPELINE_COMPLETION (
-    //     params.email,
-    //     params.email_on_fail,
-    //     params.plaintext_email,
-    //     params.outdir,
-    //     params.monochrome_logs,
-    //     params.hook_url,
-    //     RL_HIFIGENOMEASSEMBLY.out.multiqc_report
-    // )
+    PIPELINE_COMPLETION (
+        params.email,
+        params.email_on_fail,
+        params.plaintext_email,
+        params.outdir,
+        params.monochrome_logs,
+        params.hook_url,
+        RL_HIFIGENOMEASSEMBLY.out.multiqc_report
+    )
 }
 
 /*
