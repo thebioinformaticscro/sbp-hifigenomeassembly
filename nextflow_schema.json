@@ -47,7 +47,7 @@
                 "primary_only": {
                     "type": "boolean",
                     "default": false,
-                    "description": "Whether or not to process both parental haplotypes as separate assembiles after hifiasm runs.",
+                    "description": "Whether or not to process both parental haplotypes as separate assembiles after hifiasm runs."
                 }
             }
         },
