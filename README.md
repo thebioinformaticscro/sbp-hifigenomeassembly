@@ -1,12 +1,6 @@
 ## Introduction
 
-**rl/hifigenomeassembly** is a bioinformatics pipeline that ...
-
-<!-- TODO nf-core:
-   Complete this sentence with a 2-3 sentence summary of what types of data the pipeline ingests, a brief overview of the
-   major pipeline sections and the types of output it produces. You're giving an overview to someone new
-   to nf-core here, in 15-20 seconds. For an example, see https://github.com/nf-core/rnaseq/blob/master/README.md#introduction
--->
+**rl/hifigenomeassembly** is a bioinformatics pipeline that assembles reference-quality genomes from PacBio HiFi reads. Vigorous QCing at both the read and assembly level is done to ensure assembly accuracy and completeness. A reference genome for the same species as the sample being assembled is needed for scaffolding contigs into chromosomes as well as for synteny analysis and the detection of structural variants. Both an unmasked and soft-masked version of the assembled genome are output. Users can specify whether or not to output and QC a primary-only assembly (haploid) or a partially phased assembly (diploid). Currently only haploid or diploid organisms are supported.  
 
 <!-- TODO nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core
      workflows use the "tube map" design for that. See https://nf-co.re/docs/contributing/design_guidelines#examples for examples.   -->
