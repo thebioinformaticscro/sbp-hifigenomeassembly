@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36" version="24.8.6">
   <diagram name="Page-1" id="nqxrVcMHJvyRHuvHEkZy">
-    <mxGraphModel dx="1858" dy="623" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="2059" dy="747" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -114,10 +114,17 @@
             <mxPoint x="88.99999999999989" y="447" as="sourcePoint" />
             <mxPoint x="160" y="509" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="90" y="447" />
+              <mxPoint x="89" y="450" />
+              <mxPoint x="90" y="450" />
               <mxPoint x="90" y="509" />
             </Array>
           </mxGeometry>
+        </mxCell>
+        <mxCell id="zZcAiMY3G3jVpwydMJzh-45" value="" style="rounded=1;whiteSpace=wrap;html=1;strokeWidth=2;arcSize=50;fillColor=#050505;" vertex="1" parent="1">
+          <mxGeometry x="160" y="470" width="10" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="zZcAiMY3G3jVpwydMJzh-46" value="&lt;span style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;Assembly QC&lt;/b&gt;&lt;/span&gt;&lt;div&gt;&lt;b style=&quot;&quot;&gt;&lt;font color=&quot;#5c45b0&quot; style=&quot;font-size: 15px;&quot;&gt;assembly-stats&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;b style=&quot;&quot;&gt;&lt;font color=&quot;#5c45b0&quot; style=&quot;font-size: 15px;&quot;&gt;BUSCO&lt;/font&gt;&lt;/b&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#5c45b0&quot;&gt;&lt;span style=&quot;font-size: 15px;&quot;&gt;&lt;b&gt;QUAST&lt;/b&gt;&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font color=&quot;#5c45b0&quot;&gt;&lt;span style=&quot;font-size: 15px;&quot;&gt;&lt;b&gt;KAT&lt;/b&gt;&lt;/span&gt;&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="165" y="439" width="140" height="110" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
