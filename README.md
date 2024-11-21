@@ -19,7 +19,7 @@
 > [!NOTE]
 > If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
 
-First, prepare a samplesheet with your input data that looks as follows, ensuring that the necessary files are placed in a `data/` folder:
+First, prepare a samplesheet in the `asset` folder with your input data that looks as follows, ensuring that the necessary files are placed in a `data/` folder:
 
 `samplesheet.csv`:
 
