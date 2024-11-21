@@ -9,8 +9,8 @@
 3. Assembly QC ([`assembly-stats`](https://github.com/sanger-pathogens/assembly-stats), [`BUSCO`](https://busco.ezlab.org/), [`QUAST`](https://github.com/ablab/quast), [`KAT`](https://github.com/TGAC/KAT))
 4. Contamination detection and removal ([`FCS-adaptor & FCS-GX`](https://github.com/ncbi/fcs?tab=readme-ov-file))
 5. Scaffolding ([`ragtag`](https://github.com/malonge/RagTag))
-6. Repeat detection (['RepeatModeler'](https://www.repeatmasker.org/RepeatModeler/))
-7. Repeat masking (['RepeatMasker`](https://www.repeatmasker.org/RMDownload.html))
+6. Repeat detection ([`RepeatModeler`](https://www.repeatmasker.org/RepeatModeler/))
+7. Repeat masking ([`RepeatMasker`](https://www.repeatmasker.org/RMDownload.html))
 8. Synteny analysis ([`SyRI`](https://schneebergerlab.github.io/syri/))
 9. Structural variant detection ([`svim-asm`](https://github.com/eldariont/svim))
 
