@@ -14,8 +14,8 @@ nextflow.enable.dsl = 2
     IMPORT FUNCTIONS / MODULES / SUBWORKFLOWS / WORKFLOWS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
+include { ASSEMBLE                } from './workflows/assemble'
 
-include { HIFIGENOMEASSEMBLY  } from './workflows/hifigenomeassembly'
 include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_hifigenomeassembly_pipeline'
 include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_hifigenomeassembly_pipeline'
 
@@ -36,14 +36,16 @@ workflow RL_HIFIGENOMEASSEMBLY {
     main:
 
     //
-    // WORKFLOW: Run pipeline
+    // WORKFLOW: Run genome assembly  
     //
-    HIFIGENOMEASSEMBLY (
+
+    ASSEMBLE (
         samplesheet
     )
+    ch_multiqc = ASSEMBLE.out.multiqc_report 
 
     emit:
-    multiqc_report = HIFIGENOMEASSEMBLY.out.multiqc_report // channel: /path/to/multiqc_report.html
+    multiqc_report = ch_multiqc // channel: /path/to/multiqc_report.html
 
 }
 /*

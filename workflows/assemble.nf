@@ -4,12 +4,27 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { FASTQC                 } from '../modules/nf-core/fastqc/main'
+include { HIFI_QC                } from '../subworkflows/local/hifi_qc'
+include { GENOME_ASSEMBLY        } from '../subworkflows/local/genome_assembly'
+include { ASSEMBLY_QC            } from '../subworkflows/local/assembly_qc'
+include { SYNTENY                } from '../subworkflows/local/synteny'
+include { SV                     } from '../subworkflows/local/sv'
+include { REPEATS                } from '../subworkflows/local/repeats'
+
 include { MULTIQC                } from '../modules/nf-core/multiqc/main'
 include { paramsSummaryMap       } from 'plugin/nf-validation'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_hifigenomeassembly_pipeline'
+
+
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    CREATE CHANNELS FOR ADDITIONAL INPUT NEEDED
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -17,7 +32,7 @@ include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_hifi
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-workflow HIFIGENOMEASSEMBLY {
+workflow ASSEMBLE {
 
     take:
     ch_samplesheet // channel: samplesheet read in from --input
@@ -28,13 +43,72 @@ workflow HIFIGENOMEASSEMBLY {
     ch_multiqc_files = Channel.empty()
 
     //
-    // MODULE: Run FastQC
+    // SUBWORKFLOW: Run QC on PacBio HiFi reads
     //
-    FASTQC (
+    HIFI_QC (
+        ch_samplesheet  
+    )
+
+    ch_versions = ch_versions.mix(HIFI_QC.out.versions)
+
+    //
+    //SUBWORKFLOW: Assemble PacBio HiFi reads and scaffold using a reference genome
+    //
+    GENOME_ASSEMBLY (
         ch_samplesheet
     )
-    ch_multiqc_files = ch_multiqc_files.mix(FASTQC.out.zip.collect{it[1]})
-    ch_versions = ch_versions.mix(FASTQC.out.versions.first())
+
+    ch_assembly_fasta = GENOME_ASSEMBLY.out.assembly
+    ch_assembly_scaffold = GENOME_ASSEMBLY.out.corrected_scaffold
+    ch_corrected_ref = GENOME_ASSEMBLY.out.corrected_ref
+    
+    ch_versions = ch_versions.mix(GENOME_ASSEMBLY.out.versions)
+
+    //
+    //SUBWORKFLOW: QC the genome assembly (contigs and scaffolded assembly)
+    //
+    ASSEMBLY_QC (
+        ch_assembly_fasta,              // path to genome assembly 
+        ch_assembly_scaffold,            // path to scaffolded genome assembly
+        ch_corrected_ref,
+        ch_samplesheet
+    )
+    
+    ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.busco_data.map {it[1]})
+    ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.quast_data.map {it[1]})
+    ch_multiqc_files = ch_multiqc_files.mix(ASSEMBLY_QC.out.kat_data.map {it[1]})
+
+    ch_versions = ch_versions.mix(ASSEMBLY_QC.out.versions.first())
+
+    //
+    // SUBWORKFLOW: Synteny analysis
+    //
+    SYNTENY (
+        ch_samplesheet,
+        ch_assembly_scaffold, // path to genome scaffold
+        ch_corrected_ref      // path to reference genome 
+    )
+
+    ch_versions = ch_versions.mix(SYNTENY.out.versions.first())
+
+    //
+    // SUBWORKFLOW: SV analysis
+    //
+    SV (
+        ch_assembly_scaffold, // path to genome scaffold
+        ch_corrected_ref
+    )
+    
+    ch_versions = ch_versions.mix(SV.out.versions.first())
+
+    //
+    // SUBWORKFLOW: Repeat masking
+    //
+    REPEATS (
+        ch_assembly_scaffold // path to genome scaffold
+    )
+
+    ch_versions = ch_versions.mix(REPEATS.out.versions.first())
 
     //
     // Collate and save software versions

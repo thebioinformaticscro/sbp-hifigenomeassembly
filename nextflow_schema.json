@@ -43,6 +43,97 @@
                     "type": "string",
                     "description": "MultiQC report title. Printed as page header, used for filename if not otherwise specified.",
                     "fa_icon": "fas fa-file-signature"
+                },
+                "primary_only": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Whether or not to process both parental haplotypes as separate assembiles after hifiasm runs."
+                }
+            }
+        },
+        "fcsgx_options": {
+            "title": "FCSGX options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "gxdb": {
+                    "type": "string",
+                    "help_text": "This parameter is a user supplied gxdb database file for finding cross-species contamination ",
+                    "description": "gxdb database"
+                },
+                "tax_id": {
+                    "type": "integer",
+                    "help_text": "This parameter is a user supplied taxonomy ID of the species of the sample being assembled",
+                    "description": "taxonomy ID"
+                }
+            }
+        },
+        "busco_options": {
+            "title": "BUSCO options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "busco_mode": {
+                    "type": "string",
+                    "default": "genome",
+                    "description": "The mode to run Busco in. One of genome, proteins, or transcriptome"
+                },
+                "busco_lineage": {
+                    "type": "string",
+                    "default": "auto",
+                    "description": "The BUSCO lineage to use, or \\\"auto\\\" to automatically select lineage\""
+                },
+                "busco_lineages_path": {
+                    "type": "string",
+                    "default": "[]",
+                    "description": "Path to local BUSCO lineages directory."
+                },
+                "busco_config": {
+                    "type": "string",
+                    "default": "[]",
+                    "description": "Path to BUSCO config file."
+                }
+            },
+            "fa_icon": "fas fa-chart-pie"
+        },
+        "quast_options": {
+            "title": "QUAST options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "ref_gff": {
+                    "type": "string",
+                    "help_text": "This parameter is a user supplied gff/gff3 file of genes present in a reference genome",
+                    "description": "Gene annotation file"
+                }
+            }
+        },
+        "prep_fasta_options": {
+            "title": "PREP_FASTA options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "chr_names": {
+                    "type": "string",
+                    "help_text": "This parameter is a user supplied text file of chromosome names to be used in the final assembly listed in a single column",
+                    "description": "The list of chromosome names"
+                }
+            }
+        },
+        "repeat_mask_options": {
+            "title": "REPEAT_MASK options",
+            "type": "object",
+            "description": "",
+            "default": "",
+            "properties": {
+                "species": {
+                    "type": "string",
+                    "help_text": "This parameter is a user supplied taxon id used to run repeatmasker",
+                    "description": "The taxon id to use"
                 }
             }
         },
