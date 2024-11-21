@@ -30,10 +30,11 @@ sample1,data/sample1.fastq.gz,data/reference.fasta
 
 Each row represents a fastq file (PacBio HiFi) and a genome reference file.
 
-Now, you can run the pipeline using the following command, specifying whether or not you wish to output the primary assembly or a haplotype-resolved assembly using the `--primary-only` flag:
+Now, you can run the pipeline using the following command, specifying whether or not you wish to output the primary assembly or a haplotype-resolved assembly using the `--primary-only` flag. Additionally, the `-r` flag needs to be set to the version of the pipeline being used:
 
 ```bash
 nextflow run rlinder02/rl-hifigenomeassembly \
+   -r v1.0.0
    -profile <docker/singularity/.../institute> \
    --input assets/samplesheet.csv \
    --outdir <OUTDIR> \
