@@ -33,9 +33,9 @@ Each row represents a fastq file (PacBio HiFi) and a genome reference file.
 Now, you can run the pipeline using the following command, specifying whether or not you wish to output the primary assembly or a haplotype-resolved assembly using the `--primary-only` flag:
 
 ```bash
-nextflow run rl/hifigenomeassembly \
+nextflow run rlinder02/rl-hifigenomeassembly \
    -profile <docker/singularity/.../institute> \
-   --input samplesheet.csv \
+   --input assets/samplesheet.csv \
    --outdir <OUTDIR> \
    --primary_only
 ```
