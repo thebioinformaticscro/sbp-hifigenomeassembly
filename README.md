@@ -58,9 +58,9 @@ An extensive list of references for the tools used by the pipeline can be found 
 
 This pipeline uses code developed by the following publication:
 
->Jun Kim and Chuna Kim. **A beginner’s guide to assembling a draft genome and analyzing structural variants with long-read sequencing technologies**.  
+>Jun Kim and Chuna Kim. **A beginner’s guide to assembling a draft genome and analyzing structural variants with long-read sequencing technologies**. *STAR Protocols* 2022, DOI: https://doi.org/10.1016/j.xpro.2022.101506.   
 
-This pipeline uses code and infrastructure developed and maintained by the [nf-core](https://nf-co.re) community, reused here under the [MIT license](https://github.com/nf-core/tools/blob/master/LICENSE). *STAR Protocols* 2022, DOI: https://doi.org/10.1016/j.xpro.2022.101506. 
+This pipeline uses code and infrastructure developed and maintained by the [nf-core](https://nf-co.re) community, reused here under the [MIT license](https://github.com/nf-core/tools/blob/master/LICENSE). 
 
 > **The nf-core framework for community-curated bioinformatics pipelines.**
 >
