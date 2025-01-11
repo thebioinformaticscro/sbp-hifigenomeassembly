@@ -4,8 +4,8 @@ process HIFIASM {
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://depot.galaxyproject.org/singularity/hifiasm:0.19.8--h43eeafb_0' :
-        'biocontainers/hifiasm:0.19.8--h43eeafb_0' }"
+        'oras://community.wave.seqera.io/library/hifiasm:0.24.0--530ec668b20162cf' :
+        'community.wave.seqera.io/library/hifiasm:0.24.0--530ec668b20162cf' }"
 
     input:
     tuple val(meta), path(reads)
