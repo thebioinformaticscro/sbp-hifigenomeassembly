@@ -31,7 +31,7 @@ process HIFIASM {
     def prefix = task.ext.prefix ?: "${meta.id}"
 
     """
-    if [ $species == Mus musculus ]; then
+    if [ "$species" == "Mus_musculus" ]; then
         echo "This is a mouse assembly"
         hifiasm \\
             $args \\
