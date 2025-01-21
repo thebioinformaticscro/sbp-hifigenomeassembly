@@ -16,9 +16,12 @@ workflow GENOME_ASSEMBLY {
     ch_fastq = ch_samplesheet.map { meta, file, fasta -> [meta, file] }
     ch_ref = ch_samplesheet.map { meta, file, fasta -> [meta, fasta] }
     ch_chr_names = params.chr_names
+    ch_species = params.species
     ch_versions = Channel.empty()
 
-    HIFIASM ( ch_fastq )
+    HIFIASM ( ch_fastq,
+              ch_species 
+            )
     ch_versions = ch_versions.mix(HIFIASM.out.versions.first())
 
     ch_hap_primary = HIFIASM.out.processed_contigs.map { meta, path ->  

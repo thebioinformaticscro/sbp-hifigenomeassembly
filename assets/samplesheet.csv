@@ -1,2 +1,2 @@
 sample,fastq,fasta
-MS_DRG_COMBINED,data/MS_DRG_COMBINED_POPU_WGS.fastq.gz,data/mm39_renamed_reference_genome.fasta
+J20_CTL,data/J20_CTL.fastq.gz,data/mm39_renamed_reference_genome.fasta

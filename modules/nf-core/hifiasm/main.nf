@@ -9,6 +9,7 @@ process HIFIASM {
 
     input:
     tuple val(meta), path(reads)
+    val species
 
     output:
     tuple val(meta), path("*.r_utg.gfa")        , emit: raw_unitigs
@@ -29,12 +30,25 @@ process HIFIASM {
     def prefix = task.ext.prefix ?: "${meta.id}"
 
     """
-    hifiasm \\
-        $args \\
-        -o ${prefix}.asm \\
-        -t $task.cpus \\
-        $reads \\
-        2> >( tee ${prefix}.stderr.log >&2 )
+    if [ $species == 'Mus musculus']; then
+        echo "This is a mouse assembly"
+        hifiasm \\
+            $args \\
+            -o ${prefix}.asm \\
+            -t $task.cpus \\
+            -l0 \\
+            --dual-scaf \\
+            $reads \\
+            2> >( tee ${prefix}.stderr.log >&2 )
+    else
+        echo "This is a human assembly"
+        hifiasm \\
+            $args \\
+            -o ${prefix}.asm \\
+            -t $task.cpus \\
+            --dual-scaf \\
+            $reads \\
+            2> >( tee ${prefix}.stderr.log >&2 )
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
