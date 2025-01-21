@@ -1,6 +1,7 @@
 process HIFIASM {
     tag "$meta.id"
     label 'process_high'
+    debug true
 
     conda "${moduleDir}/environment.yml"
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
@@ -30,7 +31,7 @@ process HIFIASM {
     def prefix = task.ext.prefix ?: "${meta.id}"
 
     """
-    if [ $species == 'Mus musculus']; then
+    if [ $species == Mus musculus ]; then
         echo "This is a mouse assembly"
         hifiasm \\
             $args \\
@@ -49,7 +50,7 @@ process HIFIASM {
             --dual-scaf \\
             $reads \\
             2> >( tee ${prefix}.stderr.log >&2 )
-
+    fi
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         hifiasm: \$(hifiasm --version 2>&1)
