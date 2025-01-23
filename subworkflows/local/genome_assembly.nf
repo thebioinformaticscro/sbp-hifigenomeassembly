@@ -16,11 +16,10 @@ workflow GENOME_ASSEMBLY {
     ch_fastq = ch_samplesheet.map { meta, file, fasta -> [meta, file] }
     ch_ref = ch_samplesheet.map { meta, file, fasta -> [meta, fasta] }
     ch_chr_names = params.chr_names
-    ch_species = params.species
     ch_versions = Channel.empty()
 
     HIFIASM ( ch_fastq,
-              ch_species 
+              params.primary_only 
             )
     ch_versions = ch_versions.mix(HIFIASM.out.versions.first())
 
@@ -33,36 +32,31 @@ workflow GENOME_ASSEMBLY {
                                 [meta,path]
                                 }
 
-    ch_hap1 = HIFIASM.out.haplotype1.map { meta, path ->  
-                                        meta = meta + [type:'hap1']
-                                        [meta, path]
-                                        }
-    ch_ref_hap1 = ch_ref.map { meta, path ->
-                                meta = meta + [type:'hap1']
-                                [meta,path]
-                                }
-
-    ch_hap2 = HIFIASM.out.haplotype2.map { meta, path ->  
-                                        meta = meta + [type:'hap2']
-                                        [meta, path]
-                                        }
-
-    ch_ref_hap2 = ch_ref.map { meta, path ->
-                                meta = meta + [type:'hap2']
-                                [meta,path]
-                                }
-    // trying to make a new meta map (https://training.nextflow.io/advanced/metadata/#first-pass)
-    ch_both_haps = ch_hap1.mix(ch_hap2)
-    ch_both_refs = ch_ref_hap1.mix(ch_ref_hap2)
-
     if (params.primary_only) {
         ch_haps = ch_hap_primary
         ch_refs = ch_ref_primary
     } else {
+        ch_hap1 = HIFIASM.out.haplotype1.map { meta, path ->  
+                                        meta = meta + [type:'hap1']
+                                        [meta, path]
+                                        }
+        ch_ref_hap1 = ch_ref.map { meta, path ->
+                                    meta = meta + [type:'hap1']
+                                    [meta,path]
+                                    }
+        ch_hap2 = HIFIASM.out.haplotype2.map { meta, path ->  
+                                            meta = meta + [type:'hap2']
+                                            [meta, path]
+                                            }
+        ch_ref_hap2 = ch_ref.map { meta, path ->
+                                    meta = meta + [type:'hap2']
+                                    [meta,path]
+                                    }
+        ch_both_haps = ch_hap1.mix(ch_hap2)
+        ch_both_refs = ch_ref_hap1.mix(ch_ref_hap2)
         ch_haps = ch_both_haps
         ch_refs = ch_both_refs
     }
-    //ch_haps.view() - correct
 
     TO_FASTA ( ch_haps )
 

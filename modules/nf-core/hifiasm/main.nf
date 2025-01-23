@@ -10,15 +10,15 @@ process HIFIASM {
 
     input:
     tuple val(meta), path(reads)
-    val species
+    val primary_only
 
     output:
     tuple val(meta), path("*.r_utg.gfa")        , emit: raw_unitigs
     tuple val(meta), path("*.ec.bin")           , emit: corrected_reads
     tuple val(meta), path("*.ovlp.source.bin")  , emit: source_overlaps
     tuple val(meta), path("*.ovlp.reverse.bin") , emit: reverse_overlaps
-    tuple val(meta), path("*.bp.hap1.p_ctg.gfa"), emit: haplotype1
-    tuple val(meta), path("*.bp.hap2.p_ctg.gfa"), emit: haplotype2
+    tuple val(meta), path("*.bp.hap1.p_ctg.gfa"), emit: haplotype1       , optional: true
+    tuple val(meta), path("*.bp.hap2.p_ctg.gfa"), emit: haplotype2       , optional: true
     tuple val(meta), path("*.bp.p_ctg.gfa")     , emit: processed_contigs, optional: true
     tuple val(meta), path("*.asm.p_ctg.gfa")    , emit: primary_contigs  , optional: true
     tuple val(meta), path("*.log")              , emit: log
@@ -31,18 +31,17 @@ process HIFIASM {
     def prefix = task.ext.prefix ?: "${meta.id}"
 
     """
-    if [ "$species" == "Mus_musculus" ]; then
-        echo "This is a mouse assembly"
+    if [ $primary_only ]; then
+        echo "This is a primary-only assembly"
         hifiasm \\
             $args \\
             -o ${prefix}.asm \\
             -t $task.cpus \\
             -l0 \\
-            --dual-scaf \\
             $reads \\
             2> >( tee ${prefix}.stderr.log >&2 )
     else
-        echo "This is a human assembly"
+        echo "This is a phased diploid assembly"
         hifiasm \\
             $args \\
             -o ${prefix}.asm \\
