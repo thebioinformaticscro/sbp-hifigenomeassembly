@@ -1,2 +1,2 @@
 sample,fastq,fasta
-J20_CTL,data/J20_CTL.fastq.gz,data/mm39_renamed_reference_genome.fasta
+HU_AD_HPCPS_POPU_WGS_E05-87,data/HU_AD_HPCPS_POPU_WGS_E05-87.hifi.fastq.gz,data/GCF_009914755.1_T2T-CHM13v2.0_genomic_converted.fasta
