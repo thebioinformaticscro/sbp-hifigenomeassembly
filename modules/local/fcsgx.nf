@@ -8,6 +8,8 @@ process FCSGX {
     #    'docker.io/ncbi/fcs-gx:0.5.4' }"
     container 'docker.io/ncbi/fcs-gx:0.5.4'
 
+    println "!!!!!! CONTAINER SET TO: ${task.container}"
+
     input:
     tuple val(meta), path(assembly)
     val(gxdb)
