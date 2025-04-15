@@ -9,7 +9,7 @@ process FCSGX {
 
     input:
     tuple val(meta), path(assembly)
-    path(gxdb)
+    val(gxdb)
     val(tax_id)
 
     output:
