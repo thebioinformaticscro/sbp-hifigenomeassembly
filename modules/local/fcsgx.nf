@@ -3,9 +3,10 @@ process FCSGX {
     label 'process_high'
 
     conda "${moduleDir}/environment.yml"
-    container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
-        'https://docker.io/ncbi/fcs-gx:0.5.4' :
-        'docker.io/ncbi/fcs-gx:0.5.4' }"
+    # container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
+    #    'https://docker.io/ncbi/fcs-gx:0.5.4' :
+    #    'docker.io/ncbi/fcs-gx:0.5.4' }"
+    container 'docker.io/ncbi/fcs-gx:0.5.4'
 
     input:
     tuple val(meta), path(assembly)
@@ -29,7 +30,7 @@ process FCSGX {
     python3 /app/bin/run_gx \\
         --fasta $assembly \\
         --out-dir ./${prefix}_gx_out \\
-        --gx-db $gxdb \\
+        --gx-db $gxdb/all.gxi \\
         --tax-id $tax_id \\
         $args
 
