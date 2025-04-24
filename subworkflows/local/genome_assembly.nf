@@ -5,6 +5,25 @@ include { FCS_FCSADAPTOR                 } from '../../modules/nf-core/fcs/fcsad
 include { RAGTAG                         } from '../../modules/local/ragtag'
 include { PREP_FASTAS                    } from '../../modules/local/prepfastas'
 
+/* ──────────────────────────────────────────────────────────────────
+   Small helper to turn the gzip produced by FCS_FCSADAPTOR into
+   a plain FASTA that RagTag can index.
+   ────────────────────────────────────────────────────────────────── */
+process UNZIP_CLEANED {
+    tag   "${meta.id}.${meta.type}"
+
+    input:
+        tuple val(meta), path(fasta_gz)
+
+    output:
+        tuple val(meta), path("${fasta_gz.baseName}")   // e.g. .fa
+
+    script:
+        """
+        gunzip -c ${fasta_gz} > ${fasta_gz.baseName}
+        """
+}
+
 workflow GENOME_ASSEMBLY {
 
     take:
@@ -71,8 +90,10 @@ workflow GENOME_ASSEMBLY {
 //     )
 //
 //     ch_assembly_ref = FCSGX.out.cleaned_assembly.combine(ch_refs,by:0)
+    // ── unzip adaptor-trimmed assembly ─────────────────────────────────
+    UNZIP_CLEANED( FCS_FCSADAPTOR.out.cleaned_assembly )
 
-    ch_cleaned = FCS_FCSADAPTOR.out.cleaned_assembly
+    ch_cleaned      = UNZIP_CLEANED.out
     ch_assembly_ref = ch_cleaned.combine(ch_refs, by:0)
 
     RAGTAG ( ch_assembly_ref  )
